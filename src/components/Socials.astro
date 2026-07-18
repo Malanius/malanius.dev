@@ -1,0 +1,30 @@
+---
+import { socials } from '../data/socials';
+---
+
+<div class="socials">
+  {socials.map((s) => (
+    <a
+      href={s.href}
+      title={s.label}
+      aria-label={s.label}
+      rel="me"
+      style={`color: ${s.color};`}
+    >
+      <i class={s.icon}></i>
+    </a>
+  ))}
+</div>
+
+<style>
+  .socials {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    font-size: 15px;
+  }
+
+  .socials a:hover {
+    color: var(--lavender) !important;
+  }
+</style>
