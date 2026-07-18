@@ -1,0 +1,96 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { STAGES, noteName, type GardenDir } from '../lib/garden';
+
+interface Props {
+  dir: GardenDir<CollectionEntry<'garden'>>;
+  currentId?: string;
+  root?: boolean;
+}
+
+const { dir, currentId, root = false } = Astro.props;
+
+const containsCurrent = (d: Props['dir']): boolean =>
+  d.notes.some((n) => n.id === currentId) || d.dirs.some(containsCurrent);
+---
+
+{root ? (
+  <div class="tree">
+    {dir.dirs.map((sub) => <Astro.self dir={sub} currentId={currentId} />)}
+    {dir.notes.map((note) => (
+      <a href={`/garden/${note.id}/`} class:list={{ current: note.id === currentId }}>
+        {`${STAGES[note.data.stage].emoji} ${noteName(note.id)}`}
+        {note.id === currentId && <span class="marker">◀</span>}
+      </a>
+    ))}
+  </div>
+) : (
+  <details open>
+    <summary class:list={{ 'has-current': containsCurrent(dir) }}>{dir.name}/</summary>
+    <div class="children">
+      {dir.dirs.map((sub) => <Astro.self dir={sub} currentId={currentId} />)}
+      {dir.notes.map((note) => (
+        <a href={`/garden/${note.id}/`} class:list={{ current: note.id === currentId }}>
+          {`${STAGES[note.data.stage].emoji} ${noteName(note.id)}`}
+          {note.id === currentId && <span class="marker">◀</span>}
+        </a>
+      ))}
+    </div>
+  </details>
+)}
+
+<style>
+  .tree,
+  .children {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    font-size: 12px;
+  }
+
+  .children {
+    padding: 9px 0 2px 14px;
+    border-left: 1px solid var(--surface0);
+    margin-left: 3px;
+  }
+
+  summary {
+    color: var(--subtext0);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  summary::before {
+    content: '▸ ';
+    color: var(--overlay0);
+  }
+
+  details[open] > summary::before {
+    content: '▾ ';
+  }
+
+  summary:hover {
+    color: var(--lavender);
+  }
+
+  summary.has-current {
+    color: var(--text);
+  }
+
+  a {
+    color: var(--overlay0);
+  }
+
+  a:hover {
+    color: var(--lavender);
+  }
+
+  a.current {
+    color: var(--green);
+  }
+
+  .marker {
+    color: var(--mauve);
+  }
+</style>

@@ -1,0 +1,101 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<div class="row">
+  <div class="info">
+    <div class="name">
+      {project.name}
+      {project.status && <span class:list={['status', project.status]}>{project.status}</span>}
+    </div>
+    <div class="description">{project.description}</div>
+  </div>
+  <div class="tech">
+    {project.tech.map((t) => (
+      <i class={t.icon} style={`color: ${t.color};`} title={t.label}></i>
+    ))}
+    <a href={project.repo} title={`${project.name} on GitHub`} aria-label={`${project.name} on GitHub`}>
+      <i class="fa-brands fa-github"></i>
+    </a>
+  </div>
+</div>
+
+<style>
+  .row {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    border-top: 1px solid var(--surface0);
+  }
+
+  .row:last-child {
+    border-bottom: 1px solid var(--surface0);
+  }
+
+  .info {
+    flex: 1;
+  }
+
+  .name {
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .status {
+    background: var(--surface0);
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-weight: 400;
+    vertical-align: 2px;
+    margin-left: 4px;
+  }
+
+  .status.active {
+    color: var(--green);
+  }
+
+  .status.wip {
+    color: var(--yellow);
+  }
+
+  .description {
+    color: var(--subtext0);
+    font-size: 13px;
+    line-height: 1.6;
+    max-width: 52ch;
+  }
+
+  .tech {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding-top: 4px;
+    font-size: 18px;
+  }
+
+  .tech a {
+    color: var(--text);
+    font-size: 20px;
+  }
+
+  .tech a:hover {
+    color: var(--lavender);
+  }
+
+  @media (max-width: 640px) {
+    .row {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+</style>

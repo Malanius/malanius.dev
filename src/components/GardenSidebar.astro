@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import GardenTree from './GardenTree.astro';
+import { STAGES, STAGE_ORDER, buildGardenTree } from '../lib/garden';
+
+interface Props {
+  notes: CollectionEntry<'garden'>[];
+  currentId?: string;
+}
+
+const { notes, currentId } = Astro.props;
+const tree = buildGardenTree(notes);
+---
+
+<aside>
+  <a class="label" href="/garden/">garden/ 「庭」</a>
+  <GardenTree dir={tree} currentId={currentId} root />
+  <div class="legend">
+    {STAGE_ORDER.map((stage) => (
+      <div>{`${STAGES[stage].emoji} ${STAGES[stage].label} — ${STAGES[stage].hint}`}</div>
+    ))}
+  </div>
+</aside>
+
+<style>
+  aside {
+    border-right: 1px solid var(--surface0);
+    padding: 28px 22px;
+    background: var(--mantle);
+  }
+
+  .label {
+    display: block;
+    color: var(--overlay0);
+    font-size: 11px;
+    margin-bottom: 14px;
+  }
+
+  .label:hover {
+    color: var(--lavender);
+  }
+
+  .legend {
+    margin-top: 24px;
+    padding-top: 14px;
+    border-top: 1px solid var(--surface0);
+    font-size: 11px;
+    color: var(--overlay0);
+    line-height: 1.9;
+  }
+
+  @media (max-width: 720px) {
+    aside {
+      border-right: none;
+      border-bottom: 1px solid var(--surface0);
+    }
+  }
+</style>

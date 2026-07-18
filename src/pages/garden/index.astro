@@ -1,0 +1,116 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GardenSidebar from '../../components/GardenSidebar.astro';
+import { STAGES, noteName } from '../../lib/garden';
+import { monthDay } from '../../lib/format';
+
+const notes = await getCollection('garden');
+
+const recentlyTended = [...notes]
+  .sort((a, b) => b.data.tended.valueOf() - a.data.tended.valueOf())
+  .slice(0, 5);
+
+const lastTended = recentlyTended[0]?.data.tended ?? new Date(0);
+---
+
+<BaseLayout title="garden · malanius.dev" active="garden">
+  <div class="garden-layout">
+    <GardenSidebar notes={notes} />
+    <div class="overview">
+      <h1>garden <span class="jp">「庭」</span></h1>
+      <p class="stats muted">{notes.length} notes · last tended {monthDay(lastTended)}.</p>
+      <p class="intro">
+        A digital garden: notes published at whatever stage they've actually reached, tended when
+        I learn something, linked where thoughts connect. Wander the tree on the left, or start
+        with what's freshest.
+      </p>
+      <div class="recent">
+        <div class="recent-title">✿ recently tended</div>
+        <div class="recent-list">
+          {recentlyTended.map((note) => (
+            <div class="recent-row">
+              <a href={`/garden/${note.id}/`}>
+                {`${STAGES[note.data.stage].emoji} ${noteName(note.id)}`}
+              </a>
+              <span class="muted">{monthDay(note.data.tended)}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .garden-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    min-height: 480px;
+  }
+
+  .overview {
+    padding: 32px 40px;
+    min-width: 0;
+  }
+
+  h1 {
+    margin: 0 0 6px;
+    font-size: 22px;
+  }
+
+  .jp {
+    color: var(--overlay0);
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  .stats {
+    margin: 0 0 18px;
+    font-size: 12px;
+  }
+
+  .intro {
+    margin: 0 0 24px;
+    color: var(--subtext1);
+    font-size: 13.5px;
+    line-height: 1.75;
+    max-width: 52ch;
+    text-wrap: pretty;
+  }
+
+  .recent-title {
+    color: var(--mauve);
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 12.5px;
+    max-width: 44ch;
+  }
+
+  .recent-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .recent-row .muted {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 720px) {
+    .garden-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .overview {
+      padding: 28px 20px;
+    }
+  }
+</style>

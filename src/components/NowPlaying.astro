@@ -1,0 +1,44 @@
+---
+import { nowPlaying } from '../data/nowPlaying';
+---
+
+<div class="panel">
+  <div class="panel-title">▶ now playing <span class="jp">「いま」</span></div>
+  <div class="rows">
+    {nowPlaying.map((item) => (
+      <div class="row">
+        <span class="what">{`${item.emoji} ${item.title}`}</span>
+        <span class="progress">{item.progress}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .jp {
+    color: var(--overlay0);
+    font-weight: 400;
+  }
+
+  .rows {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .what {
+    color: var(--text);
+  }
+
+  .progress {
+    color: var(--overlay0);
+    flex-shrink: 0;
+  }
+</style>

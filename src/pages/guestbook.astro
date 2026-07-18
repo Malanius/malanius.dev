@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="guestbook · malanius.dev" active="home">
+  <div class="page-pad">
+    <h1 class="page-title">guestbook <span class="jp">「芳名録」</span></h1>
+    <p class="page-subtitle">leave a note, like it's 2003.</p>
+    <div class="panel">
+      <p class="soon">
+        the guestbook isn't wired up yet — the CGI script is still compiling
+        <span class="kaomoji">(´・ω・`)</span>
+      </p>
+      <p class="soon muted">until then: say hi via the fediverse or open an issue on any repo.</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .soon {
+    margin: 0 0 10px;
+    color: var(--subtext1);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .soon:last-child {
+    margin-bottom: 0;
+  }
+
+  .kaomoji {
+    color: var(--yellow);
+  }
+</style>

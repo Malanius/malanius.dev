@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectRow from '../components/ProjectRow.astro';
+import { projects } from '../data/projects';
+---
+
+<BaseLayout title="projects · malanius.dev" active="projects">
+  <div class="page-pad">
+    <h1 class="page-title">projects <span class="jp">「作品」</span></h1>
+    <p class="page-subtitle">things I've built, in various states of done.</p>
+    <div class="list">
+      {projects.map((project) => <ProjectRow project={project} />)}
+    </div>
+  </div>
+</BaseLayout>

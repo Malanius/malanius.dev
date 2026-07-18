@@ -1,0 +1,96 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GardenSidebar from '../../components/GardenSidebar.astro';
+import StageBadge from '../../components/StageBadge.astro';
+import Backlinks from '../../components/Backlinks.astro';
+import { noteName } from '../../lib/garden';
+import { monthDay, monthYear } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('garden');
+  return notes.map((note) => ({
+    params: { slug: note.id },
+    props: { note, notes },
+  }));
+}
+
+const { note, notes } = Astro.props;
+const { Content } = await render(note);
+
+const slug = noteName(note.id);
+const backlinks = notes
+  .filter((n) => n.id !== note.id && (n.body ?? '').includes(`[[${slug}]]`))
+  .map((n) => {
+    const body = (n.body ?? '').replace(/\s+/g, ' ');
+    const idx = body.indexOf(`[[${slug}]]`);
+    const start = Math.max(0, idx - 30);
+    const end = Math.min(body.length, idx + slug.length + 34);
+    return { id: n.id, snippet: `…${body.slice(start, end).trim()}…` };
+  });
+---
+
+<BaseLayout title={`${note.data.title} · garden · malanius.dev`} active="garden">
+  <div class="note-layout">
+    <GardenSidebar notes={notes} currentId={note.id} />
+    <article class="note">
+      <div class="head">
+        <h1>{note.data.title}</h1>
+        <StageBadge stage={note.data.stage} />
+      </div>
+      <div class="meta muted">
+        planted {monthYear(note.data.planted)} · last tended {monthDay(note.data.tended)} ·
+        {note.data.tags.map((tag) => <span class="tag">#{tag}</span>)}
+      </div>
+      <div class="prose">
+        <Content />
+      </div>
+      <Backlinks backlinks={backlinks} />
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .note-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    min-height: 480px;
+  }
+
+  .note {
+    padding: 32px 40px;
+    min-width: 0;
+  }
+
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 22px;
+  }
+
+  .meta {
+    font-size: 12px;
+    margin-bottom: 22px;
+  }
+
+  .tag {
+    margin-right: 4px;
+  }
+
+  @media (max-width: 720px) {
+    .note-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .note {
+      padding: 28px 20px;
+    }
+  }
+</style>

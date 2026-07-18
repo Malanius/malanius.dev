@@ -1,0 +1,54 @@
+---
+import { noteName } from '../lib/garden';
+
+interface Backlink {
+  id: string;
+  snippet: string;
+}
+
+interface Props {
+  backlinks: Backlink[];
+}
+
+const { backlinks } = Astro.props;
+---
+
+{backlinks.length > 0 && (
+  <div class="backlinks">
+    <div class="title">← linked from</div>
+    <div class="list">
+      {backlinks.map((link) => (
+        <span>
+          <a href={`/garden/${link.id}/`}>{noteName(link.id)}</a>
+          <span class="snippet"> — "{link.snippet}"</span>
+        </span>
+      ))}
+    </div>
+  </div>
+)}
+
+<style>
+  .backlinks {
+    border-top: 1px solid var(--surface0);
+    padding-top: 18px;
+    margin-top: 24px;
+  }
+
+  .title {
+    color: var(--mauve);
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 12.5px;
+  }
+
+  .snippet {
+    color: var(--overlay0);
+  }
+</style>

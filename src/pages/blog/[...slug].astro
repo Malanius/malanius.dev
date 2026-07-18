@@ -1,0 +1,76 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { fullDate, readingTime } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog')).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  );
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: { post, older: posts[i + 1] ?? null, newer: posts[i - 1] ?? null },
+  }));
+}
+
+const { post, older, newer } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={`${post.data.title} · malanius.dev`} active="blog" narrow>
+  <article class="post">
+    <div class="meta muted">
+      {fullDate(post.data.date)} · {readingTime(post.body ?? '')} min ·
+      {post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}
+    </div>
+    <h1>{post.data.title}</h1>
+    <div class="prose">
+      <Content />
+    </div>
+    <nav class="post-nav">
+      {older ? <a href={`/blog/${older.id}/`}>← older post</a> : <span></span>}
+      {newer ? (
+        <a href={`/blog/${newer.id}/`}>newer post →</a>
+      ) : (
+        <a href="/guestbook/">sign the guestbook →</a>
+      )}
+    </nav>
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    padding: 36px 32px;
+  }
+
+  .meta {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .tag {
+    margin-right: 4px;
+  }
+
+  h1 {
+    margin: 0 0 20px;
+    font-size: 22px;
+    line-height: 1.35;
+  }
+
+  .post-nav {
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1px solid var(--surface0);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 640px) {
+    .post {
+      padding: 28px 20px;
+    }
+  }
+</style>

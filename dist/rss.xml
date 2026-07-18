@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>malanius.dev</title>
+    <link>https://malanius.dev/</link>
+    <description>Developer, anime enjoyer, and collector of half-finished side projects.</description>
+    <language>en</language>
+    <item>
+      <title>Self-hosting my RSS reader was worth it</title>
+      <link>https://malanius.dev/blog/self-hosting-rss-reader/</link>
+      <guid>https://malanius.dev/blog/self-hosting-rss-reader/</guid>
+      <pubDate>Sun, 12 Jul 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Nix, six months in: a love-hate letter</title>
+      <link>https://malanius.dev/blog/nix-six-months-in/</link>
+      <guid>https://malanius.dev/blog/nix-six-months-in/</guid>
+      <pubDate>Sun, 28 Jun 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>My terminal setup, 2026 edition</title>
+      <link>https://malanius.dev/blog/terminal-setup-2026/</link>
+      <guid>https://malanius.dev/blog/terminal-setup-2026/</guid>
+      <pubDate>Wed, 03 Jun 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>What Dungeon Meshi taught me about scope creep</title>
+      <link>https://malanius.dev/blog/dungeon-meshi-scope-creep/</link>
+      <guid>https://malanius.dev/blog/dungeon-meshi-scope-creep/</guid>
+      <pubDate>Tue, 17 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>2025 in games, manga, and merge conflicts</title>
+      <link>https://malanius.dev/blog/2025-in-review/</link>
+      <guid>https://malanius.dev/blog/2025-in-review/</guid>
+      <pubDate>Tue, 30 Dec 2025 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Writing a Discord bot in Rust for no reason</title>
+      <link>https://malanius.dev/blog/discord-bot-rust/</link>
+      <guid>https://malanius.dev/blog/discord-bot-rust/</guid>
+      <pubDate>Sat, 11 Oct 2025 00:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

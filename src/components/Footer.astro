@@ -1,0 +1,27 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <span>© {year} malanius · <a href="/guestbook/">guestbook</a> · <a href="/rss.xml">rss</a></span>
+  <span>built with ♥ and too much caffeine ᕕ( ᐛ )ᕗ</span>
+</footer>
+
+<style>
+  footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 40px;
+    border-top: 1px solid var(--surface0);
+    font-size: 12px;
+    color: var(--overlay0);
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    footer {
+      padding: 14px 20px;
+    }
+  }
+</style>

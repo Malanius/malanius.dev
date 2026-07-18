@@ -1,0 +1,163 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NowPlaying from '../components/NowPlaying.astro';
+import Badges from '../components/Badges.astro';
+import { monthDay } from '../lib/format';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout title="malanius.dev" active="home">
+  <div class="home">
+    <div class="hero">
+      <div class="intro">
+        <div class="path muted">~/home</div>
+        <h1>hi, I'm malanius <span class="kaomoji">(⌐■_■)</span></h1>
+        <p class="bio">
+          Developer, anime enjoyer, and collector of half-finished side projects. I write code,
+          occasionally write about writing code, and grow a small garden of notes on things I'm
+          learning.
+        </p>
+        <p class="interests muted">
+          $ cat interests.txt <span class="output">→ anime · manga · games · tech</span>
+        </p>
+      </div>
+      <div class="avatar" aria-hidden="true">pixel avatar / mascot</div>
+    </div>
+
+    <div class="cards">
+      <NowPlaying />
+      <div class="panel">
+        <div class="panel-title">✎ recent writing</div>
+        <div class="posts">
+          {posts.map((post) => (
+            <div class="post-row">
+              <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+              <span class="muted">{monthDay(post.data.date)}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="badges">
+      <Badges />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .home {
+    padding: 44px 40px 36px;
+  }
+
+  .hero {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .intro {
+    flex: 1;
+  }
+
+  .path {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    margin: 0 0 14px;
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+  .kaomoji {
+    color: var(--yellow);
+  }
+
+  .bio {
+    margin: 0 0 10px;
+    color: var(--subtext1);
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 56ch;
+    text-wrap: pretty;
+  }
+
+  .interests {
+    margin: 0;
+    font-size: 13px;
+  }
+
+  .output {
+    color: var(--green);
+  }
+
+  .avatar {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+    border: 1px dashed var(--surface1);
+    border-radius: 8px;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--base),
+      var(--base) 6px,
+      var(--mantle) 6px,
+      var(--mantle) 12px
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--overlay0);
+    font-size: 11px;
+    padding: 8px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 36px;
+  }
+
+  .posts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .post-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .post-row .muted {
+    flex-shrink: 0;
+  }
+
+  .badges {
+    margin-top: 36px;
+  }
+
+  @media (max-width: 720px) {
+    .home {
+      padding: 28px 20px;
+    }
+
+    .hero {
+      flex-direction: column-reverse;
+    }
+
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
