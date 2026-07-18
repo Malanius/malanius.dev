@@ -7,15 +7,12 @@ interface Props {
   title: string;
   description?: string;
   active: 'home' | 'garden' | 'blog' | 'projects';
-  /** 600px reading column instead of the 860px default (blog pages) */
-  narrow?: boolean;
 }
 
 const {
   title,
   description = 'Developer, anime enjoyer, and collector of half-finished side projects.',
   active,
-  narrow = false,
 } = Astro.props;
 ---
 
@@ -26,6 +23,11 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <script is:inline>
+      document.documentElement.dataset.theme =
+        localStorage.getItem('theme') ??
+        (matchMedia('(prefers-color-scheme: light)').matches ? 'latte' : 'mocha');
+    </script>
     <link rel="alternate" type="application/rss+xml" title="malanius.dev" href="/rss.xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -39,7 +41,7 @@ const {
     />
   </head>
   <body>
-    <div class:list={['site', { narrow }]}>
+    <div class="site">
       <Header active={active} />
       <main>
         <slot />

@@ -7,7 +7,10 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkWikilinks],
     shikiConfig: {
-      theme: 'catppuccin-mocha',
+      themes: {
+        light: 'catppuccin-latte',
+        dark: 'catppuccin-mocha',
+      },
     },
   },
 });

@@ -19,8 +19,19 @@ const items = [
     {items.map((item) => (
       <a href={item.href} class:list={{ active: item.id === active }}>「{item.label}」</a>
     ))}
+    <button id="theme-toggle" aria-label="toggle color theme" title="mocha / latte">
+      <span class="moon">「月」</span><span class="sun">「日」</span>
+    </button>
   </nav>
 </header>
+
+<script>
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'latte' ? 'mocha' : 'latte';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+</script>
 
 <style>
   header {
@@ -59,6 +70,29 @@ const items = [
 
   nav a.active {
     color: var(--text);
+  }
+
+  #theme-toggle {
+    font: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--overlay0);
+    cursor: pointer;
+  }
+
+  #theme-toggle:hover {
+    color: var(--lavender);
+  }
+
+  /* show the current flavor's icon */
+  #theme-toggle .sun,
+  :global([data-theme='latte']) #theme-toggle .moon {
+    display: none;
+  }
+
+  :global([data-theme='latte']) #theme-toggle .sun {
+    display: inline;
   }
 
   @media (max-width: 640px) {

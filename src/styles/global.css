@@ -1,5 +1,6 @@
-/* Catppuccin Mocha */
+/* Catppuccin Mocha (default) */
 :root {
+  color-scheme: dark;
   --crust: #11111b;
   --mantle: #181825;
   --base: #1e1e2e;
@@ -19,6 +20,31 @@
   --peach: #fab387;
   --red: #f38ba8;
   --pink: #f5c2e7;
+}
+
+/* Catppuccin Latte (light mode, toggled via data-theme on <html>) */
+:root[data-theme='latte'] {
+  color-scheme: light;
+  --crust: #dce0e8;
+  --mantle: #e6e9ef;
+  --base: #eff1f5;
+  --surface0: #ccd0da;
+  --surface1: #bcc0cc;
+  /* latte's overlay0 is too faint on light backgrounds; overlay2 keeps muted text readable */
+  --overlay0: #7c7f93;
+  --subtext0: #6c6f85;
+  --subtext1: #5c5f77;
+  --text: #4c4f69;
+  --mauve: #8839ef;
+  --blue: #1e66f5;
+  --lavender: #7287fd;
+  --sapphire: #209fb5;
+  --teal: #179299;
+  --green: #40a02b;
+  --yellow: #df8e1d;
+  --peach: #fe640b;
+  --red: #d20f39;
+  --pink: #ea76cb;
 }
 
 * {
@@ -54,10 +80,6 @@ a:hover {
   border: 1px solid var(--surface0);
   border-radius: 8px;
   overflow: hidden;
-}
-
-.site.narrow {
-  max-width: 600px;
 }
 
 @media (max-width: 920px) {
@@ -178,6 +200,11 @@ a:hover {
   background: none;
   border: none;
   padding: 0;
+}
+
+/* Shiki emits latte colors inline and mocha colors as --shiki-dark vars */
+:root:not([data-theme='latte']) .prose pre span {
+  color: var(--shiki-dark) !important;
 }
 
 .prose .kaomoji {

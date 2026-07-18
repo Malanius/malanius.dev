@@ -9,7 +9,7 @@ tended: 2026-07-01
 How this site is built, for the three people who will ask:
 
 - **Framework**: Astro — static output, components where they help, zero client JS by default.
-- **Theme**: Catppuccin Mocha, same as everything else I own (see [[dotfiles-philosophy]]).
+- **Theme**: Catppuccin, same as everything else I own (see [[dotfiles-philosophy]]) — Mocha by default, Latte for the daylight people. Toggle is in the header.
 - **Type**: JetBrains Mono for everything. Yes, everything. It's my site.
 - **Hosting**: a small VPS behind the same reverse proxy as the rest of my [[rss-everything]] stack.
 

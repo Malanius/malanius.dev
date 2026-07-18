@@ -17,7 +17,7 @@ const { post, older, newer } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BaseLayout title={`${post.data.title} · malanius.dev`} active="blog" narrow>
+<BaseLayout title={`${post.data.title} · malanius.dev`} active="blog">
   <article class="post">
     <div class="meta muted">
       {fullDate(post.data.date)} · {readingTime(post.body ?? '')} min ·
@@ -40,7 +40,9 @@ const { Content } = await render(post);
 
 <style>
   .post {
-    padding: 36px 32px;
+    padding: 40px;
+    /* full 860px window, but keep a comfortable reading measure */
+    max-width: 680px;
   }
 
   .meta {

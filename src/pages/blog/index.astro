@@ -15,8 +15,8 @@ for (const post of posts) {
 }
 ---
 
-<BaseLayout title="blog · malanius.dev" active="blog" narrow>
-  <div class="blog-index">
+<BaseLayout title="blog · malanius.dev" active="blog">
+  <div class="page-pad">
     <h1 class="page-title">blog <span class="jp">「日記」</span></h1>
     {[...byYear.entries()].map(([year, yearPosts]) => (
       <section>
@@ -35,17 +35,8 @@ for (const post of posts) {
 </BaseLayout>
 
 <style>
-  .blog-index {
-    padding: 36px 32px;
-  }
-
   .page-title {
-    font-size: 22px;
     margin-bottom: 24px;
-  }
-
-  .page-title .jp {
-    font-size: 13px;
   }
 
   .year {
@@ -73,11 +64,5 @@ for (const post of posts) {
 
   .date {
     flex-shrink: 0;
-  }
-
-  @media (max-width: 640px) {
-    .blog-index {
-      padding: 28px 20px;
-    }
   }
 </style>
