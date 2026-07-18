@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SkillBar from '../components/SkillBar.astro';
+import { tech, creative, LEVELS } from '../data/skills';
+
+const sections = [
+  { cmd: 'tech/', groups: tech },
+  { cmd: 'creative/', groups: creative },
+];
+---
+
+<BaseLayout title="skills · malanius.dev" active="skills">
+  <div class="page-pad">
+    <h1 class="page-title">skills <span class="jp">「技」</span></h1>
+    <p class="page-subtitle">what I can do, rated with complete scientific rigor.</p>
+
+    {sections.map((section) => (
+      <section>
+        <div class="cmd muted">$ ls <span class="arg">{section.cmd}</span></div>
+        <div class="groups">
+          {section.groups.map((group) => (
+            <div class="panel">
+              <div class="panel-title">{group.title}</div>
+              <div class="skills">
+                {group.skills.map((skill) => <SkillBar skill={skill} />)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <div class="legend muted">
+      {LEVELS.map((label, i) => (
+        <span class="legend-item">
+          <span class="filled">{'▰'.repeat(i + 1)}</span>{'▱'.repeat(4 - i)} {label}
+        </span>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  section + section {
+    margin-top: 32px;
+  }
+
+  .cmd {
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+
+  .arg {
+    color: var(--green);
+  }
+
+  .groups {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .skills {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .legend {
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1px solid var(--surface0);
+    font-size: 11px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    letter-spacing: 0.5px;
+  }
+
+  .legend .filled {
+    color: var(--subtext0);
+  }
+
+  @media (max-width: 720px) {
+    .groups {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

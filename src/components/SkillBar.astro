@@ -1,0 +1,54 @@
+---
+import { LEVELS, type Skill } from '../data/skills';
+
+interface Props {
+  skill: Skill;
+}
+
+const { skill } = Astro.props;
+const tooltip = LEVELS[skill.level - 1] + (skill.note ? ` — ${skill.note}` : '');
+---
+
+<div class="skill" title={tooltip}>
+  <span class="name">
+    <i class={skill.icon} style={`color: ${skill.color};`}></i>
+    <span>{skill.name}</span>
+  </span>
+  <span class="bar" aria-label={`${skill.level} of 5: ${LEVELS[skill.level - 1]}`}>
+    <span style={`color: ${skill.color};`}>{'▰'.repeat(skill.level)}</span><span class="rest">{'▱'.repeat(5 - skill.level)}</span>
+  </span>
+</div>
+
+<style>
+  .skill {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+  }
+
+  .name {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--text);
+    min-width: 0;
+  }
+
+  .name i {
+    width: 18px;
+    text-align: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .bar {
+    flex-shrink: 0;
+    letter-spacing: 1px;
+  }
+
+  .rest {
+    color: var(--surface1);
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 interface Props {
-  active: 'home' | 'garden' | 'blog' | 'projects';
+  active: 'home' | 'garden' | 'blog' | 'projects' | 'skills';
 }
 
 const { active } = Astro.props;
@@ -10,6 +10,7 @@ const items = [
   { id: 'garden', label: 'garden', href: '/garden/' },
   { id: 'blog', label: 'blog', href: '/blog/' },
   { id: 'projects', label: 'projects', href: '/projects/' },
+  { id: 'skills', label: 'skills', href: '/skills/' },
 ] as const;
 ---
 
