@@ -113,7 +113,7 @@ export const code: Project[] = [
     name: 'cdk-verified-ses-identity',
     status: 'archived',
     description:
-      'AWS CDK construct that creates an SES identity and verifies it with DKIM records in a Route53 hosted zone.',
+      'AWS CDK construct that creates an SES identity and verifies it with DKIM records in a Route53 hosted zone. Archived now that CDK does this itself.',
     tech: [tech.typescript, tech.aws],
     links: [github('cdk-verified-ses-identity')],
   },
