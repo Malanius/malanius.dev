@@ -1,6 +1,6 @@
 export interface Project {
   name: string;
-  status?: 'active' | 'wip' | 'archived';
+  status?: 'active' | 'wip' | 'done' | 'archived';
   description: string;
   tech: { icon: string; color: string; label: string }[];
   repo: string;
@@ -35,7 +35,7 @@ export const projects: Project[] = [
     name: 'meido',
     status: 'active',
     description:
-      "Serverless Discord bot on AWS, at Master's service. /tadaima is live; /journal broadcasting to subscribed channels is on the way.",
+      "Serverless Discord bot on AWS, at Master's service. The event-driven design is proven in production, with plenty more features on the way.",
     tech: [tech.typescript, tech.aws, tech.discord],
     repo: 'https://github.com/malanius/meido',
   },
@@ -51,7 +51,7 @@ export const projects: Project[] = [
     name: 'cdk-ts-serverless-template',
     status: 'active',
     description:
-      'projen template for serverless-ready AWS CDK apps in TypeScript, so new Lambda projects start from a sane baseline.',
+      'projen template for AWS CDK apps in TypeScript, so new serverless projects start from a sane baseline.',
     tech: [tech.typescript, tech.aws],
     repo: 'https://github.com/malanius/cdk-ts-serverless-template',
   },
@@ -73,6 +73,7 @@ export const projects: Project[] = [
   },
   {
     name: 'hyprwaifu',
+    status: 'done',
     description:
       'A tiny script and systemd timer that cycles your wallpapers through hyprpaper (or awww, in the awwwaifu twin). Waifus optional, vibes mandatory.',
     tech: [tech.shell, tech.linux],
@@ -80,6 +81,7 @@ export const projects: Project[] = [
   },
   {
     name: 'tmux-spotify-linux',
+    status: 'done',
     description:
       'Linux port of the tmux-spotify plugin: a tmux menu for controlling Spotify over D-Bus instead of macOS-only binaries.',
     tech: [tech.shell, tech.spotify],
@@ -87,6 +89,7 @@ export const projects: Project[] = [
   },
   {
     name: 'strapi-provider-upload-aws-s3-cdn',
+    status: 'done',
     description:
       'Strapi upload provider for S3 that works with private buckets behind a CloudFront CDN. Published on npm.',
     tech: [tech.javascript, tech.aws, tech.npm],
