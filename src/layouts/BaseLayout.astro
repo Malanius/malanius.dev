@@ -7,12 +7,15 @@ interface Props {
   title: string;
   description?: string;
   active: 'home' | 'garden' | 'blog' | 'projects' | 'skills';
+  /** RSS feed advertised in <head>; defaults to the all-posts feed */
+  feed?: { title: string; href: string };
 }
 
 const {
   title,
   description = 'Developer, anime enjoyer, and collector of half-finished side projects.',
   active,
+  feed = { title: 'malanius.dev', href: '/rss.xml' },
 } = Astro.props;
 ---
 
@@ -28,7 +31,7 @@ const {
         localStorage.getItem('theme') ??
         (matchMedia('(prefers-color-scheme: light)').matches ? 'latte' : 'mocha');
     </script>
-    <link rel="alternate" type="application/rss+xml" title="malanius.dev" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={feed.title} href={feed.href} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

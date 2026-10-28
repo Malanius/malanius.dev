@@ -1,0 +1,66 @@
+---
+import type { Post } from '../lib/blog';
+import { monthDay } from '../lib/format';
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+
+const byYear = new Map<number, Post[]>();
+for (const post of posts) {
+  const year = post.data.date.getUTCFullYear();
+  if (!byYear.has(year)) byYear.set(year, []);
+  byYear.get(year)!.push(post);
+}
+---
+
+{posts.length === 0 && <p class="muted empty">nothing here yet. soon™</p>}
+
+{[...byYear.entries()].map(([year, yearPosts]) => (
+  <section>
+    <div class="year">{year}</div>
+    <div class="posts">
+      {yearPosts.map((post) => (
+        <div class="row">
+          <span class="date muted">{monthDay(post.data.date)}</span>
+          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+        </div>
+      ))}
+    </div>
+  </section>
+))}
+
+<style>
+  .empty {
+    font-size: 13px;
+  }
+
+  .year {
+    color: var(--mauve);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  section + section {
+    margin-top: 28px;
+  }
+
+  .posts {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 13px;
+  }
+
+  .row {
+    display: flex;
+    gap: 16px;
+  }
+
+  .date {
+    flex-shrink: 0;
+  }
+</style>

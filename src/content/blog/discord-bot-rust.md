@@ -1,6 +1,7 @@
 ---
 title: Writing a Discord bot in Rust for no reason
 date: 2025-10-11
+category: tech
 tags: [rust, projects]
 ---
 

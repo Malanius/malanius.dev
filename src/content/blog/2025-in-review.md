@@ -1,6 +1,7 @@
 ---
 title: 2025 in games, manga, and merge conflicts
 date: 2025-12-30
+category: musings
 tags: [meta, games, manga]
 ---
 

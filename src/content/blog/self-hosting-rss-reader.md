@@ -1,6 +1,7 @@
 ---
 title: Self-hosting my RSS reader was worth it
 date: 2026-07-12
+category: tech
 tags: [selfhosting, rss]
 ---
 

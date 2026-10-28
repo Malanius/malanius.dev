@@ -1,6 +1,7 @@
 ---
 title: What Dungeon Meshi taught me about scope creep
 date: 2026-03-17
+category: musings
 tags: [manga, meta]
 ---
 

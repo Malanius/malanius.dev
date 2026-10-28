@@ -1,6 +1,7 @@
 ---
 title: "Nix, six months in: a love-hate letter"
 date: 2026-06-28
+category: tech
 tags: [nix, tooling]
 ---
 

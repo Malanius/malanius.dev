@@ -20,6 +20,7 @@ const { Content } = await render(post);
 <BaseLayout title={`${post.data.title} · malanius.dev`} active="blog">
   <article class="post">
     <div class="meta muted">
+      <a class="category" href={`/blog/${post.data.category}/`}>{post.data.category}</a> ·
       {fullDate(post.data.date)} · {readingTime(post.body ?? '')} min ·
       {post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}
     </div>
@@ -44,6 +45,10 @@ const { Content } = await render(post);
   .meta {
     font-size: 12px;
     margin-bottom: 10px;
+  }
+
+  .category {
+    color: var(--mauve);
   }
 
   .tag {

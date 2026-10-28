@@ -1,0 +1,53 @@
+---
+import { CATEGORIES, type Category } from '../data/blogCategories';
+import { feedPath } from '../lib/blog';
+
+interface Props {
+  active?: Category;
+}
+
+const { active } = Astro.props;
+
+const items = [
+  { label: 'all', href: '/blog/', current: !active },
+  ...CATEGORIES.map((c) => ({ label: c, href: `/blog/${c}/`, current: c === active })),
+];
+---
+
+<nav class="categories">
+  {items.map((item) => (
+    <a href={item.href} class:list={{ current: item.current }} aria-current={item.current ? 'page' : undefined}>
+      {item.current ? `[${item.label}]` : item.label}
+    </a>
+  ))}
+  <a class="feed" href={feedPath(active)} title={`rss feed: ${active ?? 'all posts'}`}>
+    <i class="fa-solid fa-rss"></i> rss
+  </a>
+</nav>
+
+<style>
+  .categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .categories a {
+    color: var(--overlay0);
+  }
+
+  .categories a:hover {
+    color: var(--lavender);
+  }
+
+  .categories a.current {
+    color: var(--text);
+  }
+
+  .categories .feed {
+    margin-left: auto;
+    color: var(--peach);
+  }
+</style>

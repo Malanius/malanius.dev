@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CategoryNav from '../../../components/CategoryNav.astro';
+import PostList from '../../../components/PostList.astro';
+import { CATEGORIES, type Category } from '../../../data/blogCategories';
+import { feedPath, getPosts } from '../../../lib/blog';
+
+export function getStaticPaths() {
+  return CATEGORIES.map((category) => ({ params: { category } }));
+}
+
+const category = Astro.params.category as Category;
+const posts = await getPosts(category);
+---
+
+<BaseLayout
+  title={`blog · ${category} · malanius.dev`}
+  active="blog"
+  feed={{ title: `malanius.dev · ${category}`, href: feedPath(category) }}
+>
+  <div class="page-pad">
+    <h1 class="page-title">blog <span class="jp">「日記」</span></h1>
+    <CategoryNav active={category} />
+    <PostList posts={posts} />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-title {
+    margin-bottom: 16px;
+  }
+</style>

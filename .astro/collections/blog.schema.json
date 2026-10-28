@@ -23,6 +23,15 @@
             }
           ]
         },
+        "category": {
+          "type": "string",
+          "enum": [
+            "tech",
+            "maker",
+            "creative",
+            "musings"
+          ]
+        },
         "tags": {
           "type": "array",
           "items": {
@@ -36,7 +45,8 @@
       },
       "required": [
         "title",
-        "date"
+        "date",
+        "category"
       ],
       "additionalProperties": false
     }

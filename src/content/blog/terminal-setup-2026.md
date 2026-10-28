@@ -1,6 +1,7 @@
 ---
 title: My terminal setup, 2026 edition
 date: 2026-06-03
+category: tech
 tags: [tooling, terminal]
 ---
 
