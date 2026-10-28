@@ -52,7 +52,7 @@
 }
 
 html {
-  background: var(--crust);
+  background: var(--base);
 }
 
 body {
@@ -72,24 +72,17 @@ a:hover {
   color: var(--lavender);
 }
 
-/* The bordered "window" every page lives in */
+/* Centered content column; footer stays at the bottom on short pages */
 .site {
   max-width: 860px;
-  margin: 48px auto;
-  background: var(--base);
-  border: 1px solid var(--surface0);
-  border-radius: 8px;
-  overflow: hidden;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-@media (max-width: 920px) {
-  .site {
-    margin: 0;
-    border-left: none;
-    border-right: none;
-    border-radius: 0;
-    min-height: 100vh;
-  }
+.site main {
+  flex: 1;
 }
 
 /* Inner card on mantle background (now-playing, clusters, …) */
