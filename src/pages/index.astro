@@ -24,7 +24,6 @@ const posts = (await getCollection('blog'))
           $ cat interests.txt <span class="output">→ anime · manga · games · tech</span>
         </p>
       </div>
-      <div class="avatar" aria-hidden="true">pixel avatar / mascot</div>
     </div>
 
     <div class="cards">
@@ -92,28 +91,6 @@ const posts = (await getCollection('blog'))
     color: var(--green);
   }
 
-  .avatar {
-    width: 120px;
-    height: 120px;
-    flex-shrink: 0;
-    border: 1px dashed var(--surface1);
-    border-radius: 8px;
-    background: repeating-linear-gradient(
-      45deg,
-      var(--base),
-      var(--base) 6px,
-      var(--mantle) 6px,
-      var(--mantle) 12px
-    );
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--overlay0);
-    font-size: 11px;
-    padding: 8px;
-  }
-
   .cards {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -141,10 +118,6 @@ const posts = (await getCollection('blog'))
   @media (max-width: 720px) {
     .home {
       padding: 28px 20px;
-    }
-
-    .hero {
-      flex-direction: column-reverse;
     }
 
     .cards {
