@@ -219,6 +219,21 @@ export const contributions: Project[] = [
     ],
   },
   {
+    name: 'bloom',
+    status: 'done',
+    description:
+      'Config from environment variables for the Rust REST API caching middleware, fixing the issue I had reported. My first real Rust codebase.',
+    tech: [tech.rust],
+    links: [
+      {
+        icon: 'fa-brands fa-github',
+        href: 'https://github.com/valeriansaliou/bloom/commits?author=Malanius',
+        label: 'GitHub',
+        title: 'my bloom commits',
+      },
+    ],
+  },
+  {
     name: 'destination-sol',
     status: 'done',
     description:
