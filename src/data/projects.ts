@@ -3,7 +3,8 @@ export interface Project {
   status?: 'active' | 'wip' | 'planned' | 'done' | 'archived';
   description: string;
   tech: { icon: string; color: string; label: string }[];
-  links?: { icon: string; href: string; label: string }[];
+  /** title overrides the default "<name> on <label>" tooltip */
+  links?: { icon: string; href: string; label: string; title?: string }[];
 }
 
 const tech = {
@@ -11,6 +12,9 @@ const tech = {
   typescript: { icon: 'si-typescript', color: 'var(--blue)', label: 'TypeScript' },
   javascript: { icon: 'fa-brands fa-js', color: 'var(--yellow)', label: 'JavaScript' },
   python: { icon: 'fa-brands fa-python', color: 'var(--yellow)', label: 'Python' },
+  java: { icon: 'fa-brands fa-java', color: 'var(--red)', label: 'Java' },
+  angular: { icon: 'fa-brands fa-angular', color: 'var(--red)', label: 'Angular' },
+  hugo: { icon: 'si-hugo', color: 'var(--pink)', label: 'Hugo' },
   html: { icon: 'fa-brands fa-html5', color: 'var(--peach)', label: 'HTML5' },
   shell: { icon: 'fa-solid fa-terminal', color: 'var(--teal)', label: 'Shell' },
   linux: { icon: 'fa-brands fa-linux', color: 'var(--yellow)', label: 'Linux' },
@@ -89,6 +93,21 @@ export const code: Project[] = [
     links: [github('bingorat')],
   },
   {
+    name: 'aws-community-day-cz',
+    status: 'done',
+    description:
+      'Website and AWS infrastructure for AWS Community Day Czech Republic: a Hugo site deployed with CDK, built from scratch and run through the 2025 edition.',
+    tech: [tech.hugo, tech.typescript, tech.aws],
+    links: [
+      {
+        icon: 'fa-brands fa-github',
+        href: 'https://github.com/awscommunitydaycz/aws-community-day-cz',
+        label: 'GitHub',
+      },
+      { icon: 'fa-solid fa-globe', href: 'https://awscommunityday.cz', label: 'the web' },
+    ],
+  },
+  {
     name: 'hyprwaifu',
     status: 'done',
     description:
@@ -151,6 +170,14 @@ export const maker: Project[] = [
       'Wall info board built from 64×64 RGB LED matrix panels on a Raspberry Pi, for departures, weather and notifications. The departures part already spun off into pidjezdy.',
     tech: [tech.raspberryPi, tech.ledMatrix],
   },
+  {
+    name: 'brmdoor-lite',
+    status: 'done',
+    description:
+      "Offline door access on a Raspberry Pi: a keyboard card reader drives an electric lock through a relay, with access cards managed by master cards and every event logged. Based on brmlab's brmdoor.",
+    tech: [tech.raspberryPi, tech.shell],
+    links: [github('brmdoor-lite')],
+  },
 ];
 
 export const creative: Project[] = [
@@ -173,5 +200,84 @@ export const creative: Project[] = [
     status: 'wip',
     description: 'Learning and experimenting with drawing, from digital to classic styles.',
     tech: [tech.digitalArt, tech.traditionalArt],
+  },
+];
+
+export const contributions: Project[] = [
+  {
+    name: 'super-productivity',
+    status: 'planned',
+    description:
+      'Features for the todo app I run my days on, location-based reminders first. Already fixing its community CLI.',
+    tech: [tech.typescript, tech.angular],
+    links: [
+      {
+        icon: 'fa-brands fa-github',
+        href: 'https://github.com/super-productivity/super-productivity',
+        label: 'GitHub',
+      },
+    ],
+  },
+  {
+    name: 'destination-sol',
+    status: 'done',
+    description:
+      'Console commands, leveled console messages and a speed/velocity refactor for the open-source space shooter, plus contributor docs.',
+    tech: [tech.java],
+    links: [
+      {
+        icon: 'fa-brands fa-github',
+        href: 'https://github.com/MovingBlocks/DestinationSol/pulls?q=is%3Apr+author%3AMalanius',
+        label: 'GitHub',
+        title: 'my DestinationSol pull requests',
+      },
+    ],
+  },
+  {
+    name: 'terasology',
+    status: 'done',
+    description: 'Czech translations for the voxel game, and test fixes for its launcher.',
+    tech: [tech.java],
+    links: [
+      {
+        icon: 'fa-brands fa-github',
+        href: 'https://github.com/MovingBlocks/Terasology/pull/4187',
+        label: 'GitHub',
+        title: 'Terasology: Czech translations',
+      },
+      {
+        icon: 'fa-brands fa-github',
+        href: 'https://github.com/MovingBlocks/TerasologyLauncher/pulls?q=is%3Apr+author%3AMalanius',
+        label: 'GitHub',
+        title: 'TerasologyLauncher: test fixes',
+      },
+    ],
+  },
+  {
+    name: 'drive-by-fixes',
+    status: 'done',
+    description:
+      'Omarchy help-menu shortcuts, DefinitelyTyped types for properties-reader, and a froggit install-script fix.',
+    tech: [tech.shell, tech.typescript],
+    links: [
+      {
+        icon: 'fa-brands fa-github',
+        href: 'https://github.com/omacom/omarchy/pull/5756',
+        label: 'GitHub',
+        title: 'Omarchy: help-menu shortcuts',
+      },
+      {
+        icon: 'fa-brands fa-github',
+        href: 'https://github.com/DefinitelyTyped/DefinitelyTyped/pull/48429',
+        label: 'GitHub',
+        title: 'DefinitelyTyped: properties-reader types',
+      },
+      {
+        icon: 'fa-brands fa-github',
+        href: 'https://github.com/thewizardshell/froggit/pull/8',
+        label: 'GitHub',
+        title: 'froggit: install-script fix',
+      },
+    ],
   },
 ];

@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectRow from '../components/ProjectRow.astro';
-import { code, maker, creative } from '../data/projects';
+import { code, contributions, maker, creative } from '../data/projects';
 
 const sections = [
   { cmd: 'code/', projects: code },
+  { cmd: 'contributions/', projects: contributions },
   { cmd: 'maker/', projects: maker },
   { cmd: 'creative/', projects: creative },
 ];
