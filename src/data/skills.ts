@@ -45,6 +45,7 @@ export const tech: SkillGroup[] = [
       { name: 'AWS', icon: 'fa-brands fa-aws', color: 'var(--peach)', level: 5, note: 'Solutions Architect Associate, renewed 3×' },
       { name: 'AWS CDK', icon: 'fa-solid fa-cubes', color: 'var(--mauve)', level: 5 },
       { name: 'serverless & event-driven', icon: 'fa-solid fa-bolt', color: 'var(--yellow)', level: 5 },
+      { name: 'security', icon: 'fa-solid fa-shield-halved', color: 'var(--green)', level: 3 },
       { name: 'Terraform', icon: 'si-terraform', color: 'var(--lavender)', level: 3 },
     ],
   },
@@ -63,6 +64,7 @@ export const tech: SkillGroup[] = [
       { name: 'Node.js', icon: 'fa-brands fa-node-js', color: 'var(--green)', level: 5 },
       { name: 'Spring Boot', icon: 'si-spring', color: 'var(--teal)', level: 3 },
       { name: 'React', icon: 'fa-brands fa-react', color: 'var(--sapphire)', level: 3, note: 'incl. React Native' },
+      { name: 'HTML & CSS', icon: 'fa-brands fa-css3-alt', color: 'var(--lavender)', level: 3 },
       { name: 'Astro', icon: 'si-astro', color: 'var(--peach)', level: 2, note: 'this site' },
     ],
   },
@@ -71,6 +73,7 @@ export const tech: SkillGroup[] = [
     skills: [
       { name: 'Git & jj', icon: 'fa-brands fa-git-alt', color: 'var(--red)', level: 5 },
       { name: 'Hyprland & Omarchy', icon: 'si-hyprland', color: 'var(--teal)', level: 5, note: 'pidjezdy bar plugin' },
+      { name: 'software design', icon: 'fa-solid fa-diagram-project', color: 'var(--mauve)', level: 4, note: 'patterns, UML, architecture' },
       { name: 'Nix', icon: 'si-nixos', color: 'var(--blue)', level: 3 },
       { name: 'PostgreSQL', icon: 'si-postgresql', color: 'var(--sapphire)', level: 3 },
     ],
@@ -102,9 +105,17 @@ export const creative: SkillGroup[] = [
     ],
   },
   {
+    title: 'spoken languages',
+    skills: [
+      { name: 'Czech', icon: 'fa-solid fa-language', color: 'var(--red)', level: 5, note: 'native' },
+      { name: 'English', icon: 'fa-solid fa-language', color: 'var(--blue)', level: 4 },
+    ],
+  },
+  {
     title: 'just for fun',
     skills: [
       { name: 'ui theming', icon: 'fa-solid fa-brush', color: 'var(--mauve)', level: 5, note: 'catppuccin everything' },
+      { name: 'regular expressions', icon: 'fa-solid fa-asterisk', color: 'var(--green)', level: 4, note: 'now I have two problems' },
       { name: 'scope management', icon: 'fa-solid fa-triangle-exclamation', color: 'var(--peach)', level: 1, note: 'see: every project I own' },
     ],
   },
