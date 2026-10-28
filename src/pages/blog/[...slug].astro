@@ -29,11 +29,7 @@ const { Content } = await render(post);
     </div>
     <nav class="post-nav">
       {older ? <a href={`/blog/${older.id}/`}>← older post</a> : <span></span>}
-      {newer ? (
-        <a href={`/blog/${newer.id}/`}>newer post →</a>
-      ) : (
-        <a href="/guestbook/">sign the guestbook →</a>
-      )}
+      {newer && <a href={`/blog/${newer.id}/`}>newer post →</a>}
     </nav>
   </article>
 </BaseLayout>
