@@ -24,47 +24,87 @@ export const tech: SkillGroup[] = [
   {
     title: 'languages',
     skills: [
-      { name: 'Rust', icon: 'fa-brands fa-rust', color: 'var(--peach)', level: 4, note: 'the borrow checker and I are friends now' },
-      { name: 'TypeScript', icon: 'si-typescript', color: 'var(--blue)', level: 4 },
-      { name: 'Go', icon: 'fa-brands fa-golang', color: 'var(--sapphire)', level: 3 },
-      { name: 'Nix', icon: 'fa-solid fa-snowflake', color: 'var(--blue)', level: 3, note: 'six months in, see the blog' },
-      { name: 'Zig', icon: 'fa-solid fa-bolt', color: 'var(--yellow)', level: 1, note: 'two weekends in' },
+      { name: 'TypeScript', icon: 'si-typescript', color: 'var(--blue)', level: 5 },
+      { name: 'Shell', icon: 'fa-solid fa-terminal', color: 'var(--green)', level: 5 },
+      { name: 'Python', icon: 'fa-brands fa-python', color: 'var(--yellow)', level: 4 },
+      { name: 'Rust', icon: 'fa-brands fa-rust', color: 'var(--peach)', level: 2, note: 'pidjezdy, bingorat' },
     ],
   },
   {
-    title: 'tooling & infra',
+    title: 'past lives & side quests',
+    skills: [
+      { name: 'Java', icon: 'fa-brands fa-java', color: 'var(--red)', level: 3 },
+      { name: 'COBOL', icon: 'fa-solid fa-server', color: 'var(--teal)', level: 3, note: 'AS400, back in the day' },
+      { name: 'Go', icon: 'fa-brands fa-golang', color: 'var(--sapphire)', level: 2 },
+      { name: 'ReasonML', icon: 'si-reason', color: 'var(--pink)', level: 2 },
+    ],
+  },
+  {
+    title: 'cloud',
+    skills: [
+      { name: 'AWS', icon: 'fa-brands fa-aws', color: 'var(--peach)', level: 5, note: 'Solutions Architect Associate, renewed 3×' },
+      { name: 'AWS CDK', icon: 'fa-solid fa-cubes', color: 'var(--mauve)', level: 5 },
+      { name: 'serverless & event-driven', icon: 'fa-solid fa-bolt', color: 'var(--yellow)', level: 5 },
+      { name: 'Terraform', icon: 'si-terraform', color: 'var(--lavender)', level: 3 },
+    ],
+  },
+  {
+    title: 'containers & ops',
     skills: [
       { name: 'Linux', icon: 'fa-brands fa-linux', color: 'var(--yellow)', level: 5 },
-      { name: 'Neovim', icon: 'fa-solid fa-terminal', color: 'var(--green)', level: 5, note: 'the POWERED BY VIM badge is real' },
+      { name: 'CI/CD', icon: 'fa-solid fa-gears', color: 'var(--mauve)', level: 4 },
       { name: 'Docker', icon: 'fa-brands fa-docker', color: 'var(--blue)', level: 4 },
-      { name: 'self-hosting', icon: 'fa-solid fa-server', color: 'var(--teal)', level: 4, note: "it's always DNS" },
-      { name: 'CI/CD', icon: 'fa-solid fa-gears', color: 'var(--mauve)', level: 3 },
+      { name: 'Kubernetes', icon: 'si-kubernetes', color: 'var(--sapphire)', level: 3 },
     ],
   },
   {
-    title: 'web',
+    title: 'frameworks & runtimes',
     skills: [
-      { name: 'Astro', icon: 'fa-solid fa-rocket', color: 'var(--peach)', level: 4, note: 'this site' },
-      { name: 'HTML/CSS', icon: 'fa-brands fa-css3-alt', color: 'var(--sapphire)', level: 4 },
-      { name: 'Vue', icon: 'fa-brands fa-vuejs', color: 'var(--green)', level: 3, note: 'mango-reader frontend' },
+      { name: 'Node.js', icon: 'fa-brands fa-node-js', color: 'var(--green)', level: 5 },
+      { name: 'Spring Boot', icon: 'si-spring', color: 'var(--teal)', level: 3 },
+      { name: 'React', icon: 'fa-brands fa-react', color: 'var(--sapphire)', level: 3, note: 'incl. React Native' },
+      { name: 'Astro', icon: 'si-astro', color: 'var(--peach)', level: 2, note: 'this site' },
+    ],
+  },
+  {
+    title: 'tools',
+    skills: [
+      { name: 'Git & jj', icon: 'fa-brands fa-git-alt', color: 'var(--red)', level: 5 },
+      { name: 'Hyprland & Omarchy', icon: 'si-hyprland', color: 'var(--teal)', level: 5, note: 'pidjezdy bar plugin' },
+      { name: 'Nix', icon: 'si-nixos', color: 'var(--blue)', level: 3 },
+      { name: 'PostgreSQL', icon: 'si-postgresql', color: 'var(--sapphire)', level: 3 },
     ],
   },
 ];
 
 export const creative: SkillGroup[] = [
   {
-    title: 'pixels',
+    title: 'maker',
     skills: [
-      { name: 'ui theming', icon: 'fa-solid fa-brush', color: 'var(--mauve)', level: 5, note: 'catppuccin everything' },
-      { name: '88×31 badges', icon: 'fa-solid fa-image', color: 'var(--yellow)', level: 4, note: 'load-bearing' },
-      { name: 'pixel art', icon: 'fa-solid fa-palette', color: 'var(--pink)', level: 2, note: 'which explains a lot' },
+      { name: '3D printing', icon: 'fa-solid fa-cube', color: 'var(--peach)', level: 4 },
+      { name: 'CAD (Fusion)', icon: 'fa-solid fa-compass-drafting', color: 'var(--sapphire)', level: 3 },
+      { name: 'electronics', icon: 'fa-solid fa-microchip', color: 'var(--green)', level: 2 },
     ],
   },
   {
-    title: 'words & play',
+    title: 'art & sound',
     skills: [
-      { name: 'technical writing', icon: 'fa-solid fa-pen-nib', color: 'var(--teal)', level: 3, note: 'blog + garden' },
-      { name: 'game design', icon: 'fa-solid fa-gamepad', color: 'var(--red)', level: 2, note: 'pixel-shrine, wip' },
+      { name: 'DJing', icon: 'fa-solid fa-headphones', color: 'var(--mauve)', level: 4 },
+      { name: 'music production', icon: 'fa-solid fa-sliders', color: 'var(--peach)', level: 2 },
+      { name: 'drawing', icon: 'fa-solid fa-pen-nib', color: 'var(--pink)', level: 2 },
+    ],
+  },
+  {
+    title: 'words',
+    skills: [
+      { name: 'technical writing', icon: 'fa-solid fa-feather', color: 'var(--teal)', level: 3 },
+      { name: 'public speaking', icon: 'fa-solid fa-person-chalkboard', color: 'var(--yellow)', level: 2 },
+    ],
+  },
+  {
+    title: 'just for fun',
+    skills: [
+      { name: 'ui theming', icon: 'fa-solid fa-brush', color: 'var(--mauve)', level: 5, note: 'catppuccin everything' },
       { name: 'scope management', icon: 'fa-solid fa-triangle-exclamation', color: 'var(--peach)', level: 1, note: 'see: every project I own' },
     ],
   },
