@@ -22,6 +22,18 @@ export const socials: Social[] = [
     color: 'var(--sapphire)',
   },
   {
+    label: 'SoundCloud',
+    href: 'https://soundcloud.com/malanius',
+    icon: 'fa-brands fa-soundcloud',
+    color: 'var(--yellow)',
+  },
+  {
+    label: 'Mixcloud',
+    href: 'https://www.mixcloud.com/malanius/',
+    icon: 'fa-brands fa-mixcloud',
+    color: 'var(--teal)',
+  },
+  {
     label: 'Steam',
     href: 'https://steamcommunity.com/id/malanius',
     icon: 'fa-brands fa-steam',
