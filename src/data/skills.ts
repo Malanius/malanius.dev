@@ -74,6 +74,7 @@ export const tech: SkillGroup[] = [
       { name: 'Git & jj', icon: 'fa-brands fa-git-alt', color: 'var(--red)', level: 5 },
       { name: 'Hyprland & Omarchy', icon: 'si-hyprland', color: 'var(--teal)', level: 5, note: 'pidjezdy bar plugin' },
       { name: 'software design', icon: 'fa-solid fa-diagram-project', color: 'var(--mauve)', level: 4, note: 'patterns, UML, architecture' },
+      { name: 'regular expressions', icon: 'fa-solid fa-asterisk', color: 'var(--green)', level: 4 },
       { name: 'Nix', icon: 'si-nixos', color: 'var(--blue)', level: 3 },
       { name: 'PostgreSQL', icon: 'si-postgresql', color: 'var(--sapphire)', level: 3 },
     ],
@@ -109,13 +110,13 @@ export const creative: SkillGroup[] = [
     skills: [
       { name: 'Czech', icon: 'fa-solid fa-language', color: 'var(--red)', level: 5, note: 'native' },
       { name: 'English', icon: 'fa-solid fa-language', color: 'var(--blue)', level: 4 },
+      { name: 'Japanese', icon: 'fa-solid fa-language', color: 'var(--pink)', level: 2 },
     ],
   },
   {
     title: 'just for fun',
     skills: [
       { name: 'ui theming', icon: 'fa-solid fa-brush', color: 'var(--mauve)', level: 5, note: 'catppuccin everything' },
-      { name: 'regular expressions', icon: 'fa-solid fa-asterisk', color: 'var(--green)', level: 4, note: 'now I have two problems' },
       { name: 'scope management', icon: 'fa-solid fa-triangle-exclamation', color: 'var(--peach)', level: 1, note: 'see: every project I own' },
     ],
   },
