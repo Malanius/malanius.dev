@@ -31,6 +31,7 @@ const posts = (await getCollection('blog'))
       <div class="panel">
         <div class="panel-title">✎ recent writing</div>
         <div class="posts">
+          {posts.length === 0 && <span class="muted">first post is brewing. soon™</span>}
           {posts.map((post) => (
             <div class="post-row">
               <a href={`/blog/${post.id}/`}>{post.data.title}</a>
