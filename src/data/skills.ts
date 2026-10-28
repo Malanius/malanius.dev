@@ -53,6 +53,7 @@ export const tech: SkillGroup[] = [
     title: 'containers & ops',
     skills: [
       { name: 'Linux', icon: 'fa-brands fa-linux', color: 'var(--yellow)', level: 5 },
+      { name: 'Hyprland & Omarchy', icon: 'si-hyprland', color: 'var(--teal)', level: 5, note: 'pidjezdy bar plugin' },
       { name: 'CI/CD', icon: 'fa-solid fa-gears', color: 'var(--mauve)', level: 4 },
       { name: 'Docker', icon: 'fa-brands fa-docker', color: 'var(--blue)', level: 4 },
       { name: 'Kubernetes', icon: 'si-kubernetes', color: 'var(--sapphire)', level: 3 },
@@ -72,7 +73,6 @@ export const tech: SkillGroup[] = [
     title: 'tools',
     skills: [
       { name: 'Git & jj', icon: 'fa-brands fa-git-alt', color: 'var(--red)', level: 5 },
-      { name: 'Hyprland & Omarchy', icon: 'si-hyprland', color: 'var(--teal)', level: 5, note: 'pidjezdy bar plugin' },
       { name: 'software design', icon: 'fa-solid fa-diagram-project', color: 'var(--mauve)', level: 4, note: 'patterns, UML, architecture' },
       { name: 'LLMs & coding agents', icon: 'fa-solid fa-robot', color: 'var(--lavender)', level: 4, note: 'this site, pidjezdy' },
       { name: 'regular expressions', icon: 'fa-solid fa-asterisk', color: 'var(--green)', level: 4 },
