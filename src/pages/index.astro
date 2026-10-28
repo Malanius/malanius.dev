@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NowPlaying from '../components/NowPlaying.astro';
-import Badges from '../components/Badges.astro';
 import { monthDay } from '../lib/format';
 
 const posts = (await getCollection('blog'))
@@ -41,10 +40,6 @@ const posts = (await getCollection('blog'))
           ))}
         </div>
       </div>
-    </div>
-
-    <div class="badges">
-      <Badges />
     </div>
   </div>
 </BaseLayout>
@@ -141,10 +136,6 @@ const posts = (await getCollection('blog'))
 
   .post-row .muted {
     flex-shrink: 0;
-  }
-
-  .badges {
-    margin-top: 36px;
   }
 
   @media (max-width: 720px) {
