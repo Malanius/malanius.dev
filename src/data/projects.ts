@@ -23,8 +23,11 @@ const tech = {
   esp32: { icon: 'fa-solid fa-microchip', color: 'var(--green)', label: 'ESP32' },
   slack: { icon: 'fa-brands fa-slack', color: 'var(--pink)', label: 'Slack' },
   print3d: { icon: 'fa-solid fa-cube', color: 'var(--peach)', label: '3D printing' },
+  fusion: { icon: 'fa-solid fa-compass-drafting', color: 'var(--sapphire)', label: 'Fusion' },
   dj: { icon: 'fa-solid fa-headphones', color: 'var(--mauve)', label: 'DJing' },
-  krita: { icon: 'fa-solid fa-paintbrush', color: 'var(--pink)', label: 'Krita' },
+  production: { icon: 'fa-solid fa-sliders', color: 'var(--peach)', label: 'FL Studio' },
+  digitalArt: { icon: 'fa-solid fa-pen-nib', color: 'var(--pink)', label: 'Clip Studio Paint' },
+  traditionalArt: { icon: 'fa-solid fa-pencil', color: 'var(--yellow)', label: 'traditional media' },
 };
 
 const github = (repo: string) => ({
@@ -121,14 +124,15 @@ export const maker: Project[] = [
     name: 'toilet-monitor',
     status: 'wip',
     description:
-      'ESP32 door sensor that posts toilet occupancy to Slack through AWS IoT Core and a serverless backend. Hardware prototype done, backend next.',
-    tech: [tech.esp32, tech.aws, tech.slack],
+      'ESP32 door sensor that reports toilet occupancy through AWS IoT Core and a serverless backend, to Slack first with more channels planned. Hardware prototype done; firmware moving to Rust, backend next.',
+    tech: [tech.esp32, tech.rust, tech.aws, tech.slack],
   },
   {
     name: 'whiteboard-stencil',
     status: 'active',
-    description: '3D-printable whiteboard stencil, remixed from an existing model. Printables upload coming.',
-    tech: [tech.print3d],
+    description:
+      'Magnetic whiteboard planner, remodeled from scratch in Fusion after a weekly schedule on Printables. Scaled down for the Prusa MINI bed, with smaller magnets and blank headers so it works for more than a weekly calendar.',
+    tech: [tech.fusion, tech.print3d],
   },
 ];
 
@@ -136,17 +140,21 @@ export const creative: Project[] = [
   {
     name: 'dj-mixes',
     status: 'active',
-    description: "Mixes I've recorded, up on SoundCloud and Mixcloud.",
+    description: 'DJ mixes, recorded and up on Mixcloud.',
     tech: [tech.dj],
-    links: [
-      { icon: 'fa-brands fa-soundcloud', href: 'https://soundcloud.com/malanius', label: 'SoundCloud' },
-      { icon: 'fa-brands fa-mixcloud', href: 'https://www.mixcloud.com/malanius/', label: 'Mixcloud' },
-    ],
+    links: [{ icon: 'fa-brands fa-mixcloud', href: 'https://www.mixcloud.com/malanius/', label: 'Mixcloud' }],
   },
   {
-    name: 'drawing-practice',
+    name: 'music-production',
     status: 'wip',
-    description: 'Learning digital drawing in Krita, starting with traces of art I love to get the line work right.',
-    tech: [tech.krita],
+    description: 'Making my own tracks. Whatever turns out shareable lands on SoundCloud.',
+    tech: [tech.production],
+    links: [{ icon: 'fa-brands fa-soundcloud', href: 'https://soundcloud.com/malanius', label: 'SoundCloud' }],
+  },
+  {
+    name: 'drawing',
+    status: 'wip',
+    description: 'Learning and experimenting with drawing, from digital to classic styles.',
+    tech: [tech.digitalArt, tech.traditionalArt],
   },
 ];
