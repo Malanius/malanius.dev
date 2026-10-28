@@ -11,7 +11,11 @@ import { socials } from '../data/socials';
       rel="me"
       style={`color: ${s.color};`}
     >
-      <i class={s.icon}></i>
+      {s.svgPath ? (
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d={s.svgPath} /></svg>
+      ) : (
+        <i class={s.icon}></i>
+      )}
     </a>
   ))}
 </div>
@@ -22,6 +26,16 @@ import { socials } from '../data/socials';
     gap: 14px;
     align-items: center;
     font-size: 15px;
+  }
+
+  .socials a {
+    display: inline-flex;
+  }
+
+  .socials svg {
+    width: 1.15em;
+    height: 1.15em;
+    fill: currentColor;
   }
 
   .socials a:hover {
