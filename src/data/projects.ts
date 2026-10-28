@@ -13,6 +13,7 @@ const tech = {
   javascript: { icon: 'fa-brands fa-js', color: 'var(--yellow)', label: 'JavaScript' },
   python: { icon: 'fa-brands fa-python', color: 'var(--yellow)', label: 'Python' },
   java: { icon: 'fa-brands fa-java', color: 'var(--red)', label: 'Java' },
+  cobol: { icon: 'fa-solid fa-server', color: 'var(--teal)', label: 'COBOL / AS400' },
   angular: { icon: 'fa-brands fa-angular', color: 'var(--red)', label: 'Angular' },
   hugo: { icon: 'si-hugo', color: 'var(--pink)', label: 'Hugo' },
   html: { icon: 'fa-brands fa-html5', color: 'var(--peach)', label: 'HTML5' },
@@ -265,6 +266,27 @@ export const contributions: Project[] = [
         href: 'https://github.com/MovingBlocks/TerasologyLauncher/pulls?q=is%3Apr+author%3AMalanius',
         label: 'GitHub',
         title: 'TerasologyLauncher: test fixes',
+      },
+    ],
+  },
+  {
+    name: 'cobol-examples',
+    status: 'done',
+    description:
+      'Open COBOL examples for GnuCOBOL and AS/400, plus an SQLite binding, started with a former colleague to get some real COBOL out in public. I added AS/400 programs, its manual and fixes.',
+    tech: [tech.cobol],
+    links: [
+      {
+        icon: 'fa-brands fa-github',
+        href: 'https://github.com/Martinfx/Cobol',
+        label: 'GitHub',
+        title: 'Cobol: examples library',
+      },
+      {
+        icon: 'fa-brands fa-github',
+        href: 'https://github.com/Martinfx/SQLiteCobol',
+        label: 'GitHub',
+        title: 'SQLiteCobol: SQLite for OpenCobol',
       },
     ],
   },
