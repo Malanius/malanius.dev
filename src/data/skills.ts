@@ -74,6 +74,7 @@ export const tech: SkillGroup[] = [
       { name: 'Git & jj', icon: 'fa-brands fa-git-alt', color: 'var(--red)', level: 5 },
       { name: 'Hyprland & Omarchy', icon: 'si-hyprland', color: 'var(--teal)', level: 5, note: 'pidjezdy bar plugin' },
       { name: 'software design', icon: 'fa-solid fa-diagram-project', color: 'var(--mauve)', level: 4, note: 'patterns, UML, architecture' },
+      { name: 'LLMs & coding agents', icon: 'fa-solid fa-robot', color: 'var(--lavender)', level: 4, note: 'this site, pidjezdy' },
       { name: 'regular expressions', icon: 'fa-solid fa-asterisk', color: 'var(--green)', level: 4 },
       { name: 'Nix', icon: 'si-nixos', color: 'var(--blue)', level: 3 },
       { name: 'PostgreSQL', icon: 'si-postgresql', color: 'var(--sapphire)', level: 3 },
