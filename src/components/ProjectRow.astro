@@ -28,9 +28,11 @@ const { project } = Astro.props;
         <i class={t.icon} style={`color: ${t.color};`} title={t.label}></i>
       )
     )}
-    <a href={project.repo} title={`${project.name} on GitHub`} aria-label={`${project.name} on GitHub`}>
-      <i class="fa-brands fa-github"></i>
-    </a>
+    {project.links?.map((link) => (
+      <a href={link.href} title={`${project.name} on ${link.label}`} aria-label={`${project.name} on ${link.label}`}>
+        <i class={link.icon}></i>
+      </a>
+    ))}
   </div>
 </div>
 

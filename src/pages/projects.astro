@@ -1,15 +1,42 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectRow from '../components/ProjectRow.astro';
-import { projects } from '../data/projects';
+import { code, maker, creative } from '../data/projects';
+
+const sections = [
+  { cmd: 'code/', projects: code },
+  { cmd: 'maker/', projects: maker },
+  { cmd: 'creative/', projects: creative },
+];
 ---
 
 <BaseLayout title="projects · malanius.dev" active="projects">
   <div class="page-pad">
     <h1 class="page-title">projects <span class="jp">「作品」</span></h1>
     <p class="page-subtitle">things I've built, in various states of done.</p>
-    <div class="list">
-      {projects.map((project) => <ProjectRow project={project} />)}
-    </div>
+
+    {sections.map((section) => (
+      <section>
+        <div class="cmd muted">$ ls <span class="arg">{section.cmd}</span></div>
+        <div class="list">
+          {section.projects.map((project) => <ProjectRow project={project} />)}
+        </div>
+      </section>
+    ))}
   </div>
 </BaseLayout>
+
+<style>
+  section + section {
+    margin-top: 32px;
+  }
+
+  .cmd {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  .arg {
+    color: var(--green);
+  }
+</style>
