@@ -1,6 +1,6 @@
 export interface Project {
   name: string;
-  status?: 'active' | 'wip' | 'done' | 'archived';
+  status?: 'active' | 'wip' | 'planned' | 'done' | 'archived';
   description: string;
   tech: { icon: string; color: string; label: string }[];
   links?: { icon: string; href: string; label: string }[];
@@ -23,6 +23,9 @@ const tech = {
   esp32: { icon: 'fa-solid fa-microchip', color: 'var(--green)', label: 'ESP32' },
   slack: { icon: 'fa-brands fa-slack', color: 'var(--pink)', label: 'Slack' },
   print3d: { icon: 'fa-solid fa-cube', color: 'var(--peach)', label: '3D printing' },
+  prusaSlicer: { icon: 'fa-solid fa-layer-group', color: 'var(--peach)', label: 'PrusaSlicer' },
+  raspberryPi: { icon: 'fa-brands fa-raspberry-pi', color: 'var(--red)', label: 'Raspberry Pi' },
+  ledMatrix: { icon: 'fa-solid fa-table-cells-large', color: 'var(--green)', label: 'RGB LED matrix' },
   fusion: { icon: 'fa-solid fa-compass-drafting', color: 'var(--sapphire)', label: 'Fusion' },
   dj: { icon: 'fa-solid fa-headphones', color: 'var(--mauve)', label: 'DJing' },
   production: { icon: 'fa-solid fa-sliders', color: 'var(--peach)', label: 'FL Studio' },
@@ -121,6 +124,13 @@ export const code: Project[] = [
 
 export const maker: Project[] = [
   {
+    name: 'whiteboard-stencil',
+    status: 'active',
+    description:
+      'Magnetic whiteboard planner, remodeled from scratch in Fusion after a weekly schedule on Printables. Scaled down for the Prusa MINI bed, with smaller magnets and blank headers so it works for more than a weekly calendar.',
+    tech: [tech.fusion, tech.prusaSlicer, tech.print3d],
+  },
+  {
     name: 'toilet-monitor',
     status: 'wip',
     description:
@@ -128,11 +138,18 @@ export const maker: Project[] = [
     tech: [tech.esp32, tech.rust, tech.aws, tech.slack],
   },
   {
-    name: 'whiteboard-stencil',
-    status: 'active',
+    name: 'c3-rust-playground',
+    status: 'planned',
     description:
-      'Magnetic whiteboard planner, remodeled from scratch in Fusion after a weekly schedule on Printables. Scaled down for the Prusa MINI bed, with smaller magnets and blank headers so it works for more than a weekly calendar.',
-    tech: [tech.fusion, tech.print3d],
+      "An ESP32-C3-DevKit-RUST-2 on its way, to see how far embedded Rust has come since the NodeMCU days. A real project for it will follow once I know what it's good at.",
+    tech: [tech.esp32, tech.rust],
+  },
+  {
+    name: 'led-info-board',
+    status: 'planned',
+    description:
+      'Wall info board built from 64×64 RGB LED matrix panels on a Raspberry Pi, for departures, weather and notifications. The departures part already spun off into pidjezdy.',
+    tech: [tech.raspberryPi, tech.ledMatrix],
   },
 ];
 
