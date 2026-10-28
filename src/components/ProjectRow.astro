@@ -1,4 +1,5 @@
 ---
+import { brandIcons } from '../data/brandIcons';
 import type { Project } from '../data/projects';
 
 interface Props {
@@ -17,9 +18,16 @@ const { project } = Astro.props;
     <div class="description">{project.description}</div>
   </div>
   <div class="tech">
-    {project.tech.map((t) => (
-      <i class={t.icon} style={`color: ${t.color};`} title={t.label}></i>
-    ))}
+    {project.tech.map((t) =>
+      brandIcons[t.icon] ? (
+        <svg viewBox="0 0 24 24" style={`color: ${t.color};`} role="img">
+          <title>{t.label}</title>
+          <path d={brandIcons[t.icon]} />
+        </svg>
+      ) : (
+        <i class={t.icon} style={`color: ${t.color};`} title={t.label}></i>
+      )
+    )}
     <a href={project.repo} title={`${project.name} on GitHub`} aria-label={`${project.name} on GitHub`}>
       <i class="fa-brands fa-github"></i>
     </a>
@@ -91,6 +99,12 @@ const { project } = Astro.props;
   .tech a {
     color: var(--text);
     font-size: 20px;
+  }
+
+  .tech svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
   }
 
   .tech a:hover {

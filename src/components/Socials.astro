@@ -1,4 +1,5 @@
 ---
+import { brandIcons } from '../data/brandIcons';
 import { socials } from '../data/socials';
 ---
 
@@ -11,8 +12,8 @@ import { socials } from '../data/socials';
       rel="me"
       style={`color: ${s.color};`}
     >
-      {s.svgPath ? (
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d={s.svgPath} /></svg>
+      {brandIcons[s.icon] ? (
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d={brandIcons[s.icon]} /></svg>
       ) : (
         <i class={s.icon}></i>
       )}

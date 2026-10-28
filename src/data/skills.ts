@@ -25,7 +25,7 @@ export const tech: SkillGroup[] = [
     title: 'languages',
     skills: [
       { name: 'Rust', icon: 'fa-brands fa-rust', color: 'var(--peach)', level: 4, note: 'the borrow checker and I are friends now' },
-      { name: 'TypeScript', icon: 'fa-brands fa-js', color: 'var(--yellow)', level: 4 },
+      { name: 'TypeScript', icon: 'si-typescript', color: 'var(--blue)', level: 4 },
       { name: 'Go', icon: 'fa-brands fa-golang', color: 'var(--sapphire)', level: 3 },
       { name: 'Nix', icon: 'fa-solid fa-snowflake', color: 'var(--blue)', level: 3, note: 'six months in, see the blog' },
       { name: 'Zig', icon: 'fa-solid fa-bolt', color: 'var(--yellow)', level: 1, note: 'two weekends in' },

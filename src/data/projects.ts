@@ -8,7 +8,7 @@ export interface Project {
 
 const tech = {
   rust: { icon: 'fa-brands fa-rust', color: 'var(--peach)', label: 'Rust' },
-  typescript: { icon: 'fa-brands fa-js', color: 'var(--blue)', label: 'TypeScript' },
+  typescript: { icon: 'si-typescript', color: 'var(--blue)', label: 'TypeScript' },
   javascript: { icon: 'fa-brands fa-js', color: 'var(--yellow)', label: 'JavaScript' },
   python: { icon: 'fa-brands fa-python', color: 'var(--yellow)', label: 'Python' },
   html: { icon: 'fa-brands fa-html5', color: 'var(--peach)', label: 'HTML5' },
