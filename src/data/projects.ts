@@ -141,7 +141,7 @@ export const maker: Project[] = [
     name: 'c3-rust-playground',
     status: 'planned',
     description:
-      "An ESP32-C3-DevKit-RUST-2 on its way, to see how far embedded Rust has come since the NodeMCU days. A real project for it will follow once I know what it's good at.",
+      "An ESP32-C3-DevKit-RUST-2 on my desk, to see how far embedded Rust has come since the NodeMCU days. A real project for it will follow once I know what it's good at.",
     tech: [tech.esp32, tech.rust],
   },
   {
