@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { STAGES, noteName, type GardenDir } from '../lib/garden';
+
+import { type GardenDir, noteName, STAGES } from '../lib/garden';
 
 interface Props {
   dir: GardenDir<CollectionEntry<'garden'>>;

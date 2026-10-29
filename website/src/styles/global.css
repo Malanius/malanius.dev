@@ -213,6 +213,7 @@ a:hover {
 }
 
 .prose pre {
+  /* biome-ignore lint/complexity/noImportantStyles: beats Shiki's inline background */
   background: var(--mantle) !important;
   border: 1px solid var(--surface0);
   border-radius: 6px;
@@ -231,6 +232,7 @@ a:hover {
 
 /* Shiki emits latte colors inline and mocha colors as --shiki-dark vars */
 :root:not([data-theme='latte']) .prose pre span {
+  /* biome-ignore lint/complexity/noImportantStyles: beats Shiki's inline latte color */
   color: var(--shiki-dark) !important;
 }
 

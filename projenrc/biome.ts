@@ -11,8 +11,8 @@ export const biomeOptions: BiomeOptions = {
     },
     files: {
       ignoreUnknown: true,
-      // The Astro site keeps its own formatting
-      includes: ['**', '!website'],
+      // projen's defaults plus the Astro site; Biome's Markdown formatting breaks frontmatter
+      includes: ['src/**', 'test/**', '.projenrc.ts', 'projenrc/**', 'website/**', '!**/*.md'],
     },
     formatter: {
       enabled: true,
@@ -26,7 +26,15 @@ export const biomeOptions: BiomeOptions = {
           organizeImports: {
             level: 'on',
             options: {
-              groups: [':NODE:', ':BLANK_LINE:', ':PACKAGE:', ':BLANK_LINE:', '@/**', ':BLANK_LINE:', ':PATH:'],
+              groups: [
+                ':NODE:',
+                ':BLANK_LINE:',
+                [':PACKAGE:', 'astro:*'],
+                ':BLANK_LINE:',
+                '@/**',
+                ':BLANK_LINE:',
+                ':PATH:',
+              ],
             },
           },
         },
@@ -57,6 +65,19 @@ export const biomeOptions: BiomeOptions = {
         trailingCommas: JsTrailingCommas.ES5,
         bracketSpacing: true,
         lineWidth: 120,
+      },
+    },
+    css: {
+      formatter: {
+        quoteStyle: QuoteStyle.SINGLE,
+      },
+    },
+    // Lets Biome see Astro templates, so imports used only there aren't flagged as unused.
+    // Template formatting stays off: it changes whitespace in the rendered HTML.
+    html: {
+      experimentalFullSupportEnabled: true,
+      formatter: {
+        enabled: false,
       },
     },
   },

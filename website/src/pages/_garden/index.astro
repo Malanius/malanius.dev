@@ -1,9 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+
 import GardenSidebar from '../../components/GardenSidebar.astro';
-import { STAGES, noteName } from '../../lib/garden';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { monthDay } from '../../lib/format';
+import { noteName, STAGES } from '../../lib/garden';
 
 const notes = await getCollection('garden');
 

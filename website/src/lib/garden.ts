@@ -44,15 +44,17 @@ export function buildGardenTree<T extends NoteLike>(notes: T[]): GardenDir<T> {
     const parts = note.id.split('/');
     let node = root;
     for (const part of parts.slice(0, -1)) {
-      if (!node.dirs.has(part)) {
-        node.dirs.set(part, {
+      let child = node.dirs.get(part);
+      if (!child) {
+        child = {
           name: part,
           path: node.path ? `${node.path}/${part}` : part,
           dirs: new Map(),
           notes: [],
-        });
+        };
+        node.dirs.set(part, child);
       }
-      node = node.dirs.get(part)!;
+      node = child;
     }
     node.notes.push(note);
   }
@@ -67,9 +69,7 @@ export function buildGardenTree<T extends NoteLike>(notes: T[]): GardenDir<T> {
     path: node.path,
     dirs: [...node.dirs.values()]
       .sort((a, b) =>
-        depth === 0
-          ? areaRank(a.name) - areaRank(b.name) || a.name.localeCompare(b.name)
-          : a.name.localeCompare(b.name)
+        depth === 0 ? areaRank(a.name) - areaRank(b.name) || a.name.localeCompare(b.name) : a.name.localeCompare(b.name)
       )
       .map((d) => finalize(d, depth + 1)),
     notes: [...node.notes].sort(

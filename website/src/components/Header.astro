@@ -19,7 +19,7 @@ const items = [
     {items.map((item) => (
       <a href={item.href} class:list={{ active: item.id === active }}>「{item.label}」</a>
     ))}
-    <button id="theme-toggle" aria-label="toggle color theme" title="mocha / latte">
+    <button type="button" id="theme-toggle" aria-label="toggle color theme" title="mocha / latte">
       <span class="moon">「月」</span><span class="sun">「日」</span>
     </button>
   </nav>

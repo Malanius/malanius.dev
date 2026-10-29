@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
+
 import NowPlaying from '../components/NowPlaying.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { monthDay } from '../lib/format';
 
 const posts = (await getCollection('blog'))

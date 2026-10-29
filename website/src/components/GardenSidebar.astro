@@ -1,7 +1,8 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+
+import { buildGardenTree, STAGE_ORDER, STAGES } from '../lib/garden';
 import GardenTree from './GardenTree.astro';
-import { STAGES, STAGE_ORDER, buildGardenTree } from '../lib/garden';
 
 interface Props {
   notes: CollectionEntry<'garden'>[];

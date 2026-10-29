@@ -1,4 +1,5 @@
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { type CollectionEntry, getCollection } from 'astro:content';
+
 import type { Category } from '../data/blogCategories';
 
 export type Post = CollectionEntry<'blog'>;

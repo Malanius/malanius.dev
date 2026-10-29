@@ -17,11 +17,11 @@ const tooltip = LEVELS[skill.level - 1] + (skill.note ? ` — ${skill.note}` : '
         <path d={brandIcons[skill.icon]} />
       </svg>
     ) : (
-      <i class={skill.icon} style={`color: ${skill.color};`}></i>
+      <i class={skill.icon} style={`color: ${skill.color};`} />
     )}
     <span>{skill.name}</span>
   </span>
-  <span class="bar" aria-label={`${skill.level} of 5: ${LEVELS[skill.level - 1]}`}>
+  <span class="bar" role="img" aria-label={`${skill.level} of 5: ${LEVELS[skill.level - 1]}`}>
     <span style={`color: ${skill.color};`}>{'▰'.repeat(skill.level)}</span><span class="rest">{'▱'.repeat(5 - skill.level)}</span>
   </span>
 </div>

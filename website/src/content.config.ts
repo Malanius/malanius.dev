@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+
 import { CATEGORIES } from './data/blogCategories';
 
 const blog = defineCollection({

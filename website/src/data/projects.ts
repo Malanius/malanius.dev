@@ -88,8 +88,7 @@ export const code: Project[] = [
   {
     name: 'bingorat',
     status: 'wip',
-    description:
-      'Bingo in the terminal, a Rust TUI built on ratatui. Grid generation and persistence still to come.',
+    description: 'Bingo in the terminal, a Rust TUI built on ratatui. Grid generation and persistence still to come.',
     tech: [tech.rust, tech.tui],
     links: [github('bingorat')],
   },

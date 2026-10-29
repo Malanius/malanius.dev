@@ -29,7 +29,14 @@ bunx projen web:install      # website, same as `cd website && bun install`
 mise run web                 # dev server on http://localhost:4321, reloads on save
 mise run web:build           # static site into website/dist/
 cd website && bun run preview   # serve website/dist/ to check the real build
+
+bunx projen check            # Biome: format + lint everything (CDK and website)
 ```
+
+One Biome config covers the whole repo (generated from `projenrc/biome.ts`). In `.astro` files
+it formats the frontmatter, scripts and styles but leaves the HTML templates alone: its template
+formatter is experimental and changes rendered whitespace. Markdown is excluded too; its
+formatter mangles frontmatter. The VS Code settings format on save.
 
 Create `website/.env` (gitignored) for the MAL integration:
 

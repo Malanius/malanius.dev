@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
+
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { fullDate, readingTime } from '../../lib/format';
 
@@ -29,7 +30,7 @@ const { Content } = await render(post);
       <Content />
     </div>
     <nav class="post-nav">
-      {older ? <a href={`/blog/${older.id}/`}>← older post</a> : <span></span>}
+      {older ? <a href={`/blog/${older.id}/`}>← older post</a> : <span />}
       {newer && <a href={`/blog/${newer.id}/`}>newer post →</a>}
     </nav>
   </article>

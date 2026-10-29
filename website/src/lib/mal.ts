@@ -55,7 +55,7 @@ export async function malNowPlaying(): Promise<NowPlayingItem[]> {
       const [anime, manga] = await Promise.all([fetchList('anime', 2), fetchList('manga', 2)]);
       return { anime, manga };
     },
-    { anime: [], manga: [] },
+    { anime: [], manga: [] }
   );
   return [
     ...anime.map((e) => ({

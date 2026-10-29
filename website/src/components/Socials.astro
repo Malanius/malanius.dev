@@ -15,7 +15,7 @@ import { socials } from '../data/socials';
       {brandIcons[s.icon] ? (
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d={brandIcons[s.icon]} /></svg>
       ) : (
-        <i class={s.icon}></i>
+        <i class={s.icon} />
       )}
     </a>
   ))}
@@ -40,6 +40,7 @@ import { socials } from '../data/socials';
   }
 
   .socials a:hover {
+    /* biome-ignore lint/complexity/noImportantStyles: beats the per-icon inline color */
     color: var(--lavender) !important;
   }
 </style>

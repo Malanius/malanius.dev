@@ -12,13 +12,7 @@ export interface SkillGroup {
   skills: Skill[];
 }
 
-export const LEVELS = [
-  'read the tutorial',
-  'enthusiastic amateur',
-  'productive',
-  'comfortable',
-  'daily driver',
-];
+export const LEVELS = ['read the tutorial', 'enthusiastic amateur', 'productive', 'comfortable', 'daily driver'];
 
 export const tech: SkillGroup[] = [
   {
@@ -42,7 +36,13 @@ export const tech: SkillGroup[] = [
   {
     title: 'cloud',
     skills: [
-      { name: 'AWS', icon: 'fa-brands fa-aws', color: 'var(--peach)', level: 5, note: 'Solutions Architect Associate, renewed 3×' },
+      {
+        name: 'AWS',
+        icon: 'fa-brands fa-aws',
+        color: 'var(--peach)',
+        level: 5,
+        note: 'Solutions Architect Associate, renewed 3×',
+      },
       { name: 'AWS CDK', icon: 'fa-solid fa-cubes', color: 'var(--mauve)', level: 5 },
       { name: 'serverless & event-driven', icon: 'fa-solid fa-bolt', color: 'var(--yellow)', level: 5 },
       { name: 'security', icon: 'fa-solid fa-shield-halved', color: 'var(--green)', level: 3 },
@@ -73,8 +73,20 @@ export const tech: SkillGroup[] = [
     title: 'tools',
     skills: [
       { name: 'Git & jj', icon: 'fa-brands fa-git-alt', color: 'var(--red)', level: 5 },
-      { name: 'software design', icon: 'fa-solid fa-diagram-project', color: 'var(--mauve)', level: 4, note: 'patterns, UML, architecture' },
-      { name: 'LLMs & coding agents', icon: 'fa-solid fa-robot', color: 'var(--lavender)', level: 4, note: 'this site, pidjezdy' },
+      {
+        name: 'software design',
+        icon: 'fa-solid fa-diagram-project',
+        color: 'var(--mauve)',
+        level: 4,
+        note: 'patterns, UML, architecture',
+      },
+      {
+        name: 'LLMs & coding agents',
+        icon: 'fa-solid fa-robot',
+        color: 'var(--lavender)',
+        level: 4,
+        note: 'this site, pidjezdy',
+      },
       { name: 'regular expressions', icon: 'fa-solid fa-asterisk', color: 'var(--green)', level: 4 },
       { name: 'Nix', icon: 'si-nixos', color: 'var(--blue)', level: 3 },
       { name: 'PostgreSQL', icon: 'si-postgresql', color: 'var(--sapphire)', level: 3 },
@@ -118,7 +130,13 @@ export const creative: SkillGroup[] = [
     title: 'just for fun',
     skills: [
       { name: 'ui theming', icon: 'fa-solid fa-brush', color: 'var(--mauve)', level: 5, note: 'catppuccin everything' },
-      { name: 'scope management', icon: 'fa-solid fa-triangle-exclamation', color: 'var(--peach)', level: 1, note: 'see: every project I own' },
+      {
+        name: 'scope management',
+        icon: 'fa-solid fa-triangle-exclamation',
+        color: 'var(--peach)',
+        level: 1,
+        note: 'see: every project I own',
+      },
     ],
   },
 ];

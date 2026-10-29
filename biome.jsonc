@@ -10,7 +10,10 @@
             "groups": [
               ":NODE:",
               ":BLANK_LINE:",
-              ":PACKAGE:",
+              [
+                ":PACKAGE:",
+                "astro:*"
+              ],
               ":BLANK_LINE:",
               "@/**",
               ":BLANK_LINE:",
@@ -25,12 +28,12 @@
   "files": {
     "ignoreUnknown": true,
     "includes": [
-      "**",
-      "!website",
       "src/**",
       "test/**",
       ".projenrc.ts",
       "projenrc/**",
+      "website/**",
+      "!**/*.md",
       "!.gitattributes",
       "!.gitignore",
       "!.npmignore",
@@ -81,6 +84,17 @@
     "clientKind": "git",
     "enabled": true,
     "useIgnoreFile": true
+  },
+  "css": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  },
+  "html": {
+    "experimentalFullSupportEnabled": true,
+    "formatter": {
+      "enabled": false
+    }
   },
   "$schema": "node_modules/@biomejs/biome/configuration_schema.json"
 }

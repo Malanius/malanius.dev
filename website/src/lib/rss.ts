@@ -1,7 +1,6 @@
 import type { Post } from './blog';
 
-const escape = (s: string) =>
-  s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+const escapeXml = (s: string) => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 
 export function rssResponse(site: URL | undefined, posts: Post[], title: string): Response {
   const base = (site ?? new URL('https://malanius.dev')).href.replace(/\/$/, '');
@@ -9,7 +8,7 @@ export function rssResponse(site: URL | undefined, posts: Post[], title: string)
   const items = posts
     .map(
       (post) => `    <item>
-      <title>${escape(post.data.title)}</title>
+      <title>${escapeXml(post.data.title)}</title>
       <link>${base}/blog/${post.id}/</link>
       <guid>${base}/blog/${post.id}/</guid>
       <pubDate>${post.data.date.toUTCString()}</pubDate>
@@ -21,7 +20,7 @@ export function rssResponse(site: URL | undefined, posts: Post[], title: string)
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>${escape(title)}</title>
+    <title>${escapeXml(title)}</title>
     <link>${base}/</link>
     <description>Developer, anime enjoyer, and collector of half-finished side projects.</description>
     <language>en</language>

@@ -25,12 +25,12 @@ const { project } = Astro.props;
           <path d={brandIcons[t.icon]} />
         </svg>
       ) : (
-        <i class={t.icon} style={`color: ${t.color};`} title={t.label}></i>
+        <i class={t.icon} style={`color: ${t.color};`} title={t.label} />
       )
     )}
     {project.links?.map((link) => (
       <a href={link.href} title={link.title ?? `${project.name} on ${link.label}`} aria-label={link.title ?? `${project.name} on ${link.label}`}>
-        <i class={link.icon}></i>
+        <i class={link.icon} />
       </a>
     ))}
   </div>

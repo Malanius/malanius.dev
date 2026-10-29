@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
 import CategoryNav from '../../../components/CategoryNav.astro';
 import PostList from '../../../components/PostList.astro';
 import { CATEGORIES, type Category } from '../../../data/blogCategories';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { feedPath, getPosts } from '../../../lib/blog';
 
 export function getStaticPaths() {

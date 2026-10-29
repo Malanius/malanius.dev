@@ -1,11 +1,12 @@
 ---
 import { getCollection, render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+
+import Backlinks from '../../components/Backlinks.astro';
 import GardenSidebar from '../../components/GardenSidebar.astro';
 import StageBadge from '../../components/StageBadge.astro';
-import Backlinks from '../../components/Backlinks.astro';
-import { noteName } from '../../lib/garden';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { monthDay, monthYear } from '../../lib/format';
+import { noteName } from '../../lib/garden';
 
 export async function getStaticPaths() {
   const notes = await getCollection('garden');
