@@ -1,8 +1,7 @@
 ---
-import { nowPlaying } from '../data/nowPlaying';
-import { malNowPlaying } from '../lib/mal';
+import { nowPlaying } from '../lib/nowPlaying';
 
-const items = [...nowPlaying, ...(await malNowPlaying())];
+const items = await nowPlaying();
 ---
 
 <div class="panel">

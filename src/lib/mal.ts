@@ -1,14 +1,8 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import type { NowPlayingItem } from '../data/nowPlaying';
+import { withCache } from './cache';
+import type { NowPlayingItem } from './nowPlaying';
 
 const USER = 'malanius';
 const API = 'https://api.myanimelist.net/v2';
-
-/**
- * Last successful fetch, used when MAL is unreachable. Lives in node_modules/.cache so it is
- * untracked but kept between builds (most CI hosts cache node_modules).
- */
-const CACHE = new URL('../../node_modules/.cache/mal.json', import.meta.url);
 
 interface Entry {
   node: {
@@ -38,25 +32,6 @@ async function fetchList(kind: 'anime' | 'manga', limit: number): Promise<Entry[
   return (await res.json()).data;
 }
 
-/** Fresh lists when MAL answers, otherwise the cached ones (or nothing on a first build) */
-async function fetchLists(): Promise<{ anime: Entry[]; manga: Entry[] }> {
-  try {
-    const [anime, manga] = await Promise.all([fetchList('anime', 2), fetchList('manga', 2)]);
-    await mkdir(new URL('.', CACHE), { recursive: true });
-    await writeFile(CACHE, JSON.stringify({ anime, manga }));
-    return { anime, manga };
-  } catch (err) {
-    try {
-      const cached = JSON.parse(await readFile(CACHE, 'utf8'));
-      console.warn('[mal] fetch failed, using cached lists:', err);
-      return cached;
-    } catch {
-      console.warn('[mal] fetch failed and nothing cached, skipping:', err);
-      return { anime: [], manga: [] };
-    }
-  }
-}
-
 const title = (e: Entry) => e.node.alternative_titles?.en || e.node.title;
 
 /** ep 04/13; just ep 573 when the total is unknown (still airing) */
@@ -74,7 +49,14 @@ function volumes(e: Entry) {
 }
 
 export async function malNowPlaying(): Promise<NowPlayingItem[]> {
-  const { anime, manga } = await fetchLists();
+  const { anime, manga } = await withCache(
+    'mal',
+    async () => {
+      const [anime, manga] = await Promise.all([fetchList('anime', 2), fetchList('manga', 2)]);
+      return { anime, manga };
+    },
+    { anime: [], manga: [] },
+  );
   return [
     ...anime.map((e) => ({
       emoji: '📺',
