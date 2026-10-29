@@ -80,7 +80,6 @@ jobs:
 
   deploy:
     needs: diff
-    environment: prod
     runs-on: ubuntu-latest
     env:
       APP_ENV: prod

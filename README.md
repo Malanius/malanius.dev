@@ -352,7 +352,7 @@ How requests are handled (`src/website/`):
 1. **build**: installs, restores the now playing cache, builds the site with the `MAL_CLIENT_ID`
    secret, uploads `website/dist` as an artifact.
 2. **diff**: `cdk diff prod/*`, so the plan is in the logs.
-3. **deploy**: `cdk deploy prod/*`, gated by the GitHub `prod` environment.
+3. **deploy**: `cdk deploy prod/*`. No approval gate, so the scheduled runs deploy unattended.
 
 Triggers: push to `main`, daily at 04:00 UTC (keeps now playing fresh), and manually from the
 Actions tab ("Run workflow"). Runs never overlap.
@@ -373,7 +373,7 @@ bunx cdk deploy prod/web-content       # a single stack (site must be built)
 
 ### First deploy (one-time setup)
 
-1. **Bootstrap both regions** (skip any that already are):
+1. **Bootstrap both regions** (already done for this account; needed only for a new one):
    ```sh
    bunx cdk bootstrap aws://<account-id>/eu-west-1 aws://<account-id>/us-east-1
    ```
@@ -385,9 +385,10 @@ bunx cdk deploy prod/web-content       # a single stack (site must be built)
    - variable `PROD_DEPLOY_ROLE_ARN` = the role ARN from step 2
    - variable `AWS_REGION` = `eu-west-1`
    - secret `MAL_CLIENT_ID`
-5. **Repo settings** → Environments → create `prod`. Adding required reviewers there makes every
-   deploy wait for approval, including the daily scheduled one, so leave it without reviewers
-   unless you want that.
+
+The first `cdk diff` before anything is deployed warns that the web-infra change set failed:
+that stack reads the certificate ARN from the certificate stack's output, which doesn't exist
+yet. Deploys run certificate → infra → content, so the deploy itself is fine.
 
 After that, pushing to `main` deploys.
 
