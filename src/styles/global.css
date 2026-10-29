@@ -137,6 +137,31 @@ a:hover {
   color: var(--subtext1);
   font-size: 13.5px;
   line-height: 1.75;
+  /* long URLs and words break instead of pushing the page sideways */
+  overflow-wrap: break-word;
+}
+
+/* Wide tables scroll inside their own box on narrow screens */
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 0 0 16px;
+  font-size: 12.5px;
+}
+
+.prose th,
+.prose td {
+  padding: 6px 12px;
+  border: 1px solid var(--surface0);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.prose th {
+  color: var(--text);
+  background: var(--mantle);
 }
 
 .prose p {
