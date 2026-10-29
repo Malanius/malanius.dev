@@ -39,7 +39,7 @@ export class WebsiteCloudFront extends Construct {
       domainNames: [domainName, `www.${domainName}`],
       certificate,
       defaultRootObject: 'index.html',
-      priceClass: PriceClass.PRICE_CLASS_100,
+      priceClass: PriceClass.PRICE_CLASS_ALL,
       httpVersion: HttpVersion.HTTP2_AND_3,
       defaultBehavior: {
         origin: S3BucketOrigin.withOriginAccessControl(websiteBucket),

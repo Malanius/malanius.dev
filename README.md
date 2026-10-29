@@ -369,6 +369,8 @@ How requests are handled (`src/website/`):
   behind Origin Access Control has no directory index of its own.
 - Missing pages: S3 answers 403 (CloudFront may only read objects, not list them), and both 403
   and 404 map to `/404.html` with status 404.
+- Served from all CloudFront edge locations (`PRICE_CLASS_ALL`), so visitors outside Europe and
+  North America get a nearby edge too. Data transfer from those edges costs more per GB.
 - Caching uses the managed `CachingOptimized` policy; every deploy invalidates `/*`. Responses
   get the managed security headers policy (HSTS, nosniff, frame options, …).
 - The content stack finds the bucket and distribution through SSM parameters written by the infra
@@ -427,8 +429,9 @@ After that, pushing to `main` deploys.
 
 ### Costs
 
-Near zero at personal-site traffic: CloudFront's always-free tier (1 TB, 10M requests a month),
-pennies of S3, $0.50/month for the hosted zone. The deploy Lambda (BucketDeployment) runs only
+Near zero at personal-site traffic: CloudFront's always-free tier (1 TB, 10M requests a month,
+counted across all edges, so the price class doesn't matter inside it), pennies of S3,
+$0.50/month for the hosted zone. The deploy Lambda (BucketDeployment) runs only
 during deploys. WAF, once added, is the first real cost.
 
 ## Working with jj
