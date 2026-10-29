@@ -7,7 +7,7 @@ const year = new Date().getFullYear();
 <footer>
   <span>© {year} malanius</span>
   <Socials />
-  <span>built with ♥ and too much caffeine ᕕ( ᐛ )ᕗ</span>
+  <span>built with ♥ and too much caffeine <span class="kaomoji">ᕕ( ᐛ )ᕗ</span></span>
 </footer>
 
 <style>
@@ -20,6 +20,10 @@ const year = new Date().getFullYear();
     color: var(--overlay0);
     gap: 12px;
     flex-wrap: wrap;
+  }
+
+  .kaomoji {
+    white-space: nowrap;
   }
 
   @media (max-width: 640px) {
