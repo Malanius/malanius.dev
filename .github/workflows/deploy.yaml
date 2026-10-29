@@ -1,0 +1,107 @@
+name: Deploy CDK & Web
+
+on:
+  push:
+    branches: [main]
+  # Daily rebuild keeps now playing (MAL, Trello) fresh
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for actions/checkout
+
+# Never run two deploys at once
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v6
+
+      - name: Prepare environment
+        uses: ./.github/workflows/prepare
+
+      - name: Install website dependencies
+        run: bunx projen web:install
+
+      # Last fetched MAL/Trello data, used when an API is down during the build.
+      # Unique key so every run saves the latest data.
+      - name: Restore now playing cache
+        uses: actions/cache@v4
+        with:
+          path: website/node_modules/.cache
+          key: now-playing-${{ github.run_id }}
+          restore-keys: |
+            now-playing-
+
+      - name: Build website
+        run: bunx projen web:build
+        env:
+          MAL_CLIENT_ID: ${{ secrets.MAL_CLIENT_ID }}
+
+      - name: Archive built website
+        uses: actions/upload-artifact@v4
+        with:
+          name: website
+          path: website/dist
+
+  diff:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      APP_ENV: prod
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v6
+
+      - name: Download built website
+        uses: actions/download-artifact@v4
+        with:
+          name: website
+          path: website/dist
+
+      - name: Prepare environment
+        uses: ./.github/workflows/prepare
+
+      - name: Assume GHA role
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.PROD_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Diff CDK
+        run: npx cdk diff ${APP_ENV}/*
+
+  deploy:
+    needs: diff
+    environment: prod
+    runs-on: ubuntu-latest
+    env:
+      APP_ENV: prod
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v6
+
+      - name: Download built website
+        uses: actions/download-artifact@v4
+        with:
+          name: website
+          path: website/dist
+
+      - name: Prepare environment
+        uses: ./.github/workflows/prepare
+
+      - name: Assume GHA role
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.PROD_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Deploy CDK
+        run: npx cdk deploy ${APP_ENV}/* --require-approval never
