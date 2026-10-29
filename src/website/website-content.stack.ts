@@ -18,19 +18,13 @@ export class WebsiteContent extends Stack {
   constructor(scope: Construct, id: string, props: WebsiteContentProps) {
     super(scope, id, props);
 
-    const parameter = (id: string, parameterName: string) =>
-      StringParameter.fromStringParameterAttributes(this, id, { parameterName, forceDynamicReference: true })
-        .stringValue;
+    const bucketName = StringParameter.valueForStringParameter(this, websiteBucketParameterName(props));
 
-    const destinationBucket = Bucket.fromBucketName(
-      this,
-      'WebsiteBucket',
-      parameter('WebsiteBucketName', websiteBucketParameterName(props))
-    );
+    const destinationBucket = Bucket.fromBucketName(this, 'WebsiteBucket', bucketName);
 
     const distribution = Distribution.fromDistributionAttributes(this, 'Distribution', {
-      distributionId: parameter('DistributionId', distributionIdParameterName(props)),
-      domainName: parameter('DistributionDomain', distributionDomainParameterName(props)),
+      distributionId: StringParameter.valueForStringParameter(this, distributionIdParameterName(props)),
+      domainName: StringParameter.valueForStringParameter(this, distributionDomainParameterName(props)),
     });
 
     new BucketDeployment(this, 'DeployWebsite', {

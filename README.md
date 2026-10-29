@@ -374,7 +374,9 @@ How requests are handled (`src/website/`):
 - Caching uses the managed `CachingOptimized` policy; every deploy invalidates `/*`. Responses
   get the managed security headers policy (HSTS, nosniff, frame options, …).
 - The content stack finds the bucket and distribution through SSM parameters written by the infra
-  stack (`/prod/malanius-dev/…`), so content deploys never touch the infra stack.
+  stack (`/prod/malanius-dev/…`), so content deploys never touch the infra stack. They come in as
+  CloudFormation parameters of type `AWS::SSM::Parameter::Value<String>`
+  (`StringParameter.valueForStringParameter`), so every deploy reads the current values.
 - The hosted zone ID and domain are in `src/website/domain.ts`.
 
 ### Pipeline
