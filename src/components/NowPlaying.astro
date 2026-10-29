@@ -1,13 +1,18 @@
 ---
 import { nowPlaying } from '../data/nowPlaying';
+import { malNowPlaying } from '../lib/mal';
+
+const items = [...nowPlaying, ...(await malNowPlaying())];
 ---
 
 <div class="panel">
   <div class="panel-title">▶ now playing <span class="jp">「いま」</span></div>
   <div class="rows">
-    {nowPlaying.map((item) => (
+    {items.map((item) => (
       <div class="row">
-        <span class="what">{`${item.emoji} ${item.title}`}</span>
+        <span class="what">
+          {item.emoji} {item.href ? <a href={item.href} title={item.title}>{item.title}</a> : item.title}
+        </span>
         <span class="progress">{item.progress}</span>
       </div>
     ))}
@@ -33,8 +38,21 @@ import { nowPlaying } from '../data/nowPlaying';
     gap: 12px;
   }
 
+  /* Long titles get cut off with … (full title on hover) */
   .what {
     color: var(--text);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .what a {
+    color: inherit;
+  }
+
+  .what a:hover {
+    color: var(--lavender);
   }
 
   .progress {
