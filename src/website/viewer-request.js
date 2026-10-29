@@ -10,7 +10,9 @@ function handler(event) {
     return {
       statusCode: 301,
       statusDescription: 'Moved Permanently',
-      headers: { location: { value: `https://${host.slice(4)}${request.uri}` } },
+      headers: {
+        location: { value: `https://${host.slice(4)}${request.uri}` },
+      },
     };
   }
 
