@@ -25,6 +25,7 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   name: 'malanius.dev',
   authorName: 'Michal Slota',
   authorEmail: 'malaniusprivierre@gmail.com',
+  license: 'MIT',
 
   cdkVersion,
   cdkVersionPinning: true,

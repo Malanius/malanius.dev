@@ -516,3 +516,8 @@ const posts = await getPosts();
 - `import.meta.env.X` reads env vars (from `.env` locally, from the host when deployed).
 
 Docs: <https://docs.astro.build>
+
+## License
+
+- **Code** (CDK, components, styles, scripts): MIT, see [`LICENSE`](LICENSE). Projen generates it from `license: 'MIT'` in `.projenrc.ts`, so change it there, not in the file.
+- **Content** (everything in `website/src/content/`: posts, garden notes, their images): CC BY 4.0, see [`website/src/content/LICENSE`](website/src/content/LICENSE). Others may share and adapt it if they credit you.
