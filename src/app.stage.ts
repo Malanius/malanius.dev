@@ -18,7 +18,9 @@ export class AppStage extends Stage {
     if (appEnv === 'prod') {
       new GitHubDeploy(this, 'gh-deploy', {
         stackName: `${appName}-${appEnv}-gh-deploy`,
-        repository: 'Malanius/malanius.dev',
+        // the repo uses GitHub's immutable OIDC subject (owner@id/repo@id), see
+        // `gh api repos/Malanius/malanius.dev/actions/oidc/customization/sub`
+        repository: 'Malanius@6827667/malanius.dev@1438536452',
         branch: 'main',
       });
     }

@@ -392,6 +392,12 @@ Triggers: push to `main`, daily at 04:00 UTC (keeps now playing fresh), and manu
 Actions tab ("Run workflow"). Runs never overlap. The deploy role only trusts `main`, so a run
 started from any other branch fails at the AWS credentials step.
 
+The role matches GitHub's immutable OIDC subject, which names the owner and repo by ID
+(`repo:Malanius@6827667/malanius.dev@1438536452:ref:refs/heads/main`), set in `src/app.stage.ts`.
+A repo deleted and recreated under the same name gets a new ID and isn't trusted. Check the
+format with `gh api repos/Malanius/malanius.dev/actions/oidc/customization/sub`; older repos
+(like meido) still send the plain `repo:owner/name:…` form.
+
 The now playing fallback cache (`website/node_modules/.cache`) is carried between runs with
 `actions/cache`; every run saves a new copy, the next one restores the latest.
 
@@ -408,6 +414,8 @@ bunx cdk deploy prod/web-content       # a single stack (site must be built)
 
 ### First deploy (one-time setup)
 
+Done on 2026-10-29; kept for rebuilding from scratch.
+
 1. **Bootstrap both regions** (already done for this account; needed only for a new one):
 
    ```sh
@@ -415,13 +423,27 @@ bunx cdk deploy prod/web-content       # a single stack (site must be built)
    ```
 
 2. **Deploy everything locally once**: `mise run deploy`. This creates the deploy role too; copy
-   the `DeployRoleArn` output.
+   the `DeployRoleArn` output. CDK asks to confirm the IAM changes, so run it in a real terminal
+   (or add `--require-approval never`).
 3. **Create the GitHub repo** `Malanius/malanius.dev` and push (see
    [bookmarks and pushing](#bookmarks-and-pushing)).
 4. **Repo settings** → Secrets and variables → Actions:
    - variable `PROD_DEPLOY_ROLE_ARN` = the role ARN from step 2
    - variable `AWS_REGION` = `eu-west-1`
    - secret `MAL_CLIENT_ID`
+
+   Or with gh:
+
+   ```sh
+   gh variable set AWS_REGION -R Malanius/malanius.dev --body eu-west-1
+   gh variable set PROD_DEPLOY_ROLE_ARN -R Malanius/malanius.dev --body <role-arn>
+   grep MAL_CLIENT_ID website/.env | cut -d= -f2- | tr -d '"' | gh secret set MAL_CLIENT_ID -R Malanius/malanius.dev
+   ```
+
+5. **Check the OIDC subject format** (see [pipeline](#pipeline)) and match it in
+   `src/app.stage.ts`, else the workflow fails with `Not authorized to perform
+   sts:AssumeRoleWithWebIdentity`. Redeploy `prod/gh-deploy` locally after changing it; CI can't
+   fix a role it can't assume.
 
 The first `cdk diff` before anything is deployed warns that the web-infra change set failed:
 that stack reads the certificate ARN from the certificate stack's output, which doesn't exist
@@ -457,15 +479,8 @@ stuff (`website/dist/`, `.astro/`, `node_modules/`, `cdk.out/`, `.env`, `.playwr
 
 ### Bookmarks and pushing
 
-There's no bookmark (jj's branch) or remote yet. Before the first push:
-
-```sh
-jj bookmark create main -r @-              # point main at the last commit
-jj git remote add origin git@github.com:Malanius/malanius.dev.git
-jj git push --bookmark main --allow-new
-```
-
-After that, each time you want to publish new commits:
+The remote is `origin` (`git@github.com:Malanius/malanius.dev.git`) and `main` tracks it. Each
+time you want to publish new commits:
 
 ```sh
 jj bookmark set main -r @-                 # move main forward to the latest commit
