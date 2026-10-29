@@ -9,12 +9,6 @@ interface List {
   cards: { name: string; shortUrl: string }[];
 }
 
-/** Lists are matched by name, so the emoji prefixes on the board can change freely */
-const LISTS = [
-  { match: 'Playing', emoji: '🎮', progress: '' },
-  { match: 'Infinite', emoji: '♾️', progress: '∞' },
-];
-
 async function fetchLists(): Promise<List[]> {
   const url = `https://api.trello.com/1/boards/${BOARD}/lists?cards=open&card_fields=name,shortUrl&fields=name`;
   const res = await fetch(url);
@@ -22,15 +16,17 @@ async function fetchLists(): Promise<List[]> {
   return res.json();
 }
 
-/** First 2 cards (board order) of the playing and infinite lists */
+/**
+ * First 2 cards (board order) of the playing list. Matched by name, so the emoji prefix on the
+ * board can change freely.
+ */
 export async function trelloNowPlaying(): Promise<NowPlayingItem[]> {
   const lists = await withCache('trello', fetchLists, []);
-  return LISTS.flatMap(({ match, emoji, progress }) =>
-    (lists.find((l) => l.name.includes(match))?.cards ?? []).slice(0, 2).map((card) => ({
-      emoji,
-      title: card.name,
-      progress,
-      href: card.shortUrl,
-    })),
-  );
+  const playing = lists.find((l) => l.name.includes('Playing'))?.cards ?? [];
+  return playing.slice(0, 2).map((card) => ({
+    emoji: '🎮',
+    title: card.name,
+    progress: '',
+    href: card.shortUrl,
+  }));
 }
