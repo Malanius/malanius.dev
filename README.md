@@ -1,7 +1,8 @@
 # malanius.dev
 
 Personal site: projects, skills, blog. Static [Astro 5](https://docs.astro.build) site, Catppuccin
-colors, JetBrains Mono everywhere.
+colors, JetBrains Mono everywhere. Hosted on S3 behind CloudFront, all of it defined with
+[AWS CDK](https://docs.aws.amazon.com/cdk/) in this repo.
 
 - [Quick start](#quick-start)
 - [Repo map](#repo-map)
@@ -11,21 +12,26 @@ colors, JetBrains Mono everywhere.
 - [Home page and now playing](#home-page-and-now-playing)
 - [Styling and theme](#styling-and-theme)
 - [The garden (hidden)](#the-garden-hidden)
-- [Deploying](#deploying)
+- [Infrastructure and deploying](#infrastructure-and-deploying)
 - [Working with jj](#working-with-jj)
 - [Troubleshooting](#troubleshooting)
 - [Astro in five minutes](#astro-in-five-minutes)
 
 ## Quick start
 
+Tools come from [mise](https://mise.jdx.dev) (`.mise.toml`: node, bun, aws-cdk). Everything uses
+bun as the package manager.
+
 ```sh
-npm install
-npm run dev       # dev server on http://localhost:4321, reloads on save
-npm run build     # static site into dist/
-npm run preview   # serve dist/ to check the real build
+bun install                  # CDK project (repo root)
+bunx projen web:install      # website, same as `cd website && bun install`
+
+mise run web                 # dev server on http://localhost:4321, reloads on save
+mise run web:build           # static site into website/dist/
+cd website && bun run preview   # serve website/dist/ to check the real build
 ```
 
-Create a `.env` file (gitignored) for the MAL integration:
+Create `website/.env` (gitignored) for the MAL integration:
 
 ```sh
 MAL_CLIENT_ID=your-client-id
@@ -36,32 +42,49 @@ The site builds without it; anime and manga then come from the cache or are skip
 
 ## Repo map
 
+Two projects in one repo, like aws-community-day-cz: the CDK app at the root, the site in
+`website/`.
+
 ```
-public/                  copied to the site as-is (favicon.svg)
-src/
-  content/blog/          blog posts (Markdown)
-  content/garden/        garden notes (hidden for now)
-  content.config.ts      frontmatter schemas for blog and garden
-  data/                  hand-edited site data
-    projects.ts            projects page
-    skills.ts              skills page
-    socials.ts             footer icons
-    blogCategories.ts      blog categories
-    brandIcons.ts          extra brand icons (Simple Icons)
-  lib/                   build-time helpers
-    blog.ts                post queries, feed paths
-    rss.ts                 RSS XML
-    nowPlaying.ts          now playing = Trello games + MAL anime/manga
-    mal.ts, trello.ts      the two data sources
-    cache.ts               stale-data fallback for both
-    format.ts              date formats, reading time
-  pages/                 one file = one URL (see below)
-  components/            reusable pieces (Header, Footer, ProjectRow, …)
-  layouts/BaseLayout.astro   <head>, header, footer around every page
-  styles/global.css      colors, shared classes, post typography
+.projenrc.ts, projenrc/  CDK project config (projen); generates package.json, tsconfig, …
+src/                     CDK app
+  main.ts                  app entry: name, env, region
+  app.stage.ts             the prod stage and its stacks
+  deploy/                  GitHub Actions deploy role
+  website/                 certificate, bucket, CloudFront, DNS, content upload
+.github/workflows/       deploy pipeline
+.mise.toml               tools and tasks (web, web:build, diff, deploy)
+
+website/                 the Astro site, its own package.json
+  public/                  copied to the site as-is (favicon.svg)
+  src/
+    content/blog/          blog posts (Markdown)
+    content/garden/        garden notes (hidden for now)
+    content.config.ts      frontmatter schemas for blog and garden
+    data/                  hand-edited site data
+      projects.ts            projects page
+      skills.ts              skills page
+      socials.ts             footer icons
+      blogCategories.ts      blog categories
+      brandIcons.ts          extra brand icons (Simple Icons)
+    lib/                   build-time helpers
+      blog.ts                post queries, feed paths
+      rss.ts                 RSS XML
+      nowPlaying.ts          now playing = Trello games + MAL anime/manga
+      mal.ts, trello.ts      the two data sources
+      cache.ts               stale-data fallback for both
+      format.ts              date formats, reading time
+    pages/                 one file = one URL (see below)
+    components/            reusable pieces (Header, Footer, ProjectRow, …)
+    layouts/BaseLayout.astro   <head>, header, footer around every page
+    styles/global.css      colors, shared classes, post typography
 ```
 
-Pages and their URLs:
+**Don't edit projen-generated files** (`package.json`, `tsconfig.json`, `cdk.json`, `.gitignore`,
+… they say so at the top). Change `.projenrc.ts` and run `bunx projen`. The website's files are
+not managed by projen.
+
+Pages and their URLs (paths relative to `website/src/`):
 
 | File                                  | URL                                   |
 | ------------------------------------- | ------------------------------------- |
@@ -80,7 +103,7 @@ Pages and their URLs:
 
 ### A new post
 
-Create `src/content/blog/<slug>.md`. The file name becomes the URL: `my-first-post.md` →
+Create `website/src/content/blog/<slug>.md`. The file name becomes the URL: `my-first-post.md` →
 `/blog/my-first-post/`.
 
 ```md
@@ -102,7 +125,7 @@ Text starts here. Normal Markdown.
 | `tags`     | no       | Shown on the post. Free-form, no tag pages.                  |
 
 A typo in the frontmatter (missing title, unknown category) fails the build with a message
-pointing at the file. That's the schema in `src/content.config.ts` doing its job.
+pointing at the file. That's the schema in `website/src/content.config.ts` doing its job.
 
 Reading time is calculated from the text (200 words/min). The post automatically appears on
 `/blog/`, its category page, the home page "recent writing" card (latest 3) and both RSS feeds.
@@ -116,17 +139,17 @@ Two layouts work; pick per post:
 
 ```
 # flat: post file + folder of the same name for its images
-src/content/blog/terminal-setup.md
-src/content/blog/terminal-setup/stack.png
+website/src/content/blog/terminal-setup.md
+website/src/content/blog/terminal-setup/stack.png
   → ![my terminal stack](./terminal-setup/stack.png)
 
 # folder: everything in one folder, URL stays /blog/terminal-setup/
-src/content/blog/terminal-setup/index.md
-src/content/blog/terminal-setup/stack.png
+website/src/content/blog/terminal-setup/index.md
+website/src/content/blog/terminal-setup/stack.png
   → ![my terminal stack](./stack.png)
 ```
 
-Always write alt text (the part in `[]`). Images in `public/` also work (`![x](/img.png)`) but
+Always write alt text (the part in `[]`). Images in `website/public/` also work (`![x](/img.png)`) but
 skip optimization, so prefer the relative way.
 
 A worked example lives in history: `jj show xlnkvkyx` (git: `4e7a3c7`, "docs: example post
@@ -140,12 +163,12 @@ theme). Put the language after the fence: ` ```ts `, ` ```sh `, ` ```rust `.
 
 ### Drafts
 
-There's no draft flag: every file in `src/content/blog/` gets published. Keep unfinished posts
+There's no draft flag: every file in `website/src/content/blog/` gets published. Keep unfinished posts
 on their own jj change (see [draft posts](#draft-posts)) or outside the folder until ready.
 
 ### Categories
 
-Defined once in `src/data/blogCategories.ts`:
+Defined once in `website/src/data/blogCategories.ts`:
 
 ```ts
 export const CATEGORIES = ['tech', 'maker', 'creative', 'musings'] as const;
@@ -156,9 +179,9 @@ Removing one fails the build for any post still using it.
 
 ## Projects, skills, socials
 
-All three are TypeScript arrays in `src/data/`. Edit, save, the dev server reloads.
+All three are TypeScript arrays in `website/src/data/`. Edit, save, the dev server reloads.
 
-### Projects (`src/data/projects.ts`)
+### Projects (`website/src/data/projects.ts`)
 
 Four exported lists, one per section on the page: `code`, `contributions`, `maker`, `creative`.
 Order in the file = order on the page.
@@ -185,7 +208,7 @@ const tech = {
 Non-GitHub links take an icon, URL and label: `{ icon: 'fa-brands fa-mixcloud', href: '…',
 label: 'Mixcloud' }`. The tooltip defaults to "<name> on <label>"; set `title` to override.
 
-### Skills (`src/data/skills.ts`)
+### Skills (`website/src/data/skills.ts`)
 
 Two exported lists, `tech` and `creative`, each made of titled groups:
 
@@ -196,7 +219,7 @@ Two exported lists, `tech` and `creative`, each made of titled groups:
 `level` is 1–5 and maps to the labels in `LEVELS` (read the tutorial → daily driver), shown as
 the legend at the bottom of the page. `note` is optional small print under the name.
 
-### Socials (`src/data/socials.ts`)
+### Socials (`website/src/data/socials.ts`)
 
 Footer icons, in display order. Each is `{ label, href, icon, color }`.
 
@@ -213,7 +236,7 @@ To add a brand icon:
 
 1. Find it on <https://simpleicons.org> (CC0 licensed).
 2. Download the SVG, copy the `d="…"` value of its `<path>`.
-3. Add it to `src/data/brandIcons.ts` as `'si-<name>': '<path>'`.
+3. Add it to `website/src/data/brandIcons.ts` as `'si-<name>': '<path>'`.
 4. Use `'si-<name>'` as the icon.
 
 Colors are always CSS variables from the palette: `var(--peach)`, `var(--blue)`, … (list in
@@ -223,7 +246,7 @@ Colors are always CSS variables from the palette: `var(--peach)`, `var(--blue)`,
 
 ### Intro and interests
 
-Both live directly in `src/pages/index.astro`: the bio is the `<p class="bio">` paragraph, the
+Both live directly in `website/src/pages/index.astro`: the bio is the `<p class="bio">` paragraph, the
 interests are the `interests` array in the frontmatter (keep it sorted).
 
 ### Now playing
@@ -240,10 +263,10 @@ Filled automatically at **build time**, so it's as fresh as the last build:
   `ep 04/13`; manga shows volume if you track it, otherwise chapter.
 - Trello needs no key (public board). The list is found by the word "Playing" in its name, so
   emojis can change but keep the word.
-- Each successful fetch is saved to `node_modules/.cache/<source>.json`. If MAL or Trello is down
+- Each successful fetch is saved to `website/node_modules/.cache/<source>.json`. If MAL or Trello is down
   (or `MAL_CLIENT_ID` is missing), the build uses that saved copy and prints a `[mal]` or
   `[trello]` warning. Stale rows beat an empty panel.
-- To change counts, emojis or formats: `src/lib/mal.ts`, `src/lib/trello.ts`.
+- To change counts, emojis or formats: `website/src/lib/mal.ts`, `website/src/lib/trello.ts`.
 
 MAL Client ID: MAL → Account Settings → API → Create ID (app type "web", placeholder URLs are
 fine).
@@ -252,7 +275,7 @@ fine).
 
 ### Colors
 
-Catppuccin, defined as CSS variables in `src/styles/global.css` for both flavors: **mocha**
+Catppuccin, defined as CSS variables in `website/src/styles/global.css` for both flavors: **mocha**
 (dark) and **latte** (light). Always use the variables, never hex values, so both themes work:
 
 ```
@@ -283,46 +306,96 @@ In `global.css`: `.panel` / `.panel-title` (the boxed cards), `.page-pad`, `.pag
 ## The garden (hidden)
 
 The digital garden (linked notes with 🌱/🌿/🌲 stages and `[[wikilinks]]`) is built but hidden for
-the first deploy. Its pages are in `src/pages/_garden/`; Astro ignores anything starting with `_`.
+the first deploy. Its pages are in `website/src/pages/_garden/`; Astro ignores anything starting with `_`.
 
-Its notes in `src/content/garden/` are still placeholders. To bring it back:
+Its notes in `website/src/content/garden/` are still placeholders. To bring it back:
 
 1. Replace the placeholder notes with real ones (schema: `title`, `stage`, `tags`, `planted`,
    `tended`).
-2. Rename `src/pages/_garden/` → `src/pages/garden/`.
+2. Rename `website/src/pages/_garden/` → `website/src/pages/garden/`.
 3. Add `{ id: 'garden', label: 'garden', href: '/garden/' }` to `items` in
-   `src/components/Header.astro`.
+   `website/src/components/Header.astro`.
 
 Heads-up: the `[[note-slug]]` syntax is active in all Markdown, blog posts included, and links to
 `/garden/…`. Don't use it in posts while the garden is hidden.
 
-## Deploying
+## Infrastructure and deploying
 
-Any static host works (Cloudflare Pages, Netlify, Vercel, GitHub Pages):
+### What runs where
 
-| Setting       | Value                                         |
-| ------------- | --------------------------------------------- |
-| Build command | `npm run build`                               |
-| Output dir    | `dist`                                        |
-| Node          | 20.3+ or 22+ (developed on 24)                |
-| Env vars      | `MAL_CLIENT_ID`                               |
+Everything is in one AWS account, one `prod` environment (no previews), region `eu-west-1`:
 
-`404.html` is picked up automatically by all of the above. The site URL (`https://malanius.dev`,
-used in RSS links) is set in `astro.config.mjs`.
+| Stack                              | Region    | Contents                                                       |
+| ---------------------------------- | --------- | -------------------------------------------------------------- |
+| `malanius-dev-prod-gh-deploy`      | eu-west-1 | IAM role GitHub Actions assumes (trusts `Malanius/malanius.dev`) |
+| `malanius-dev-prod-certificate`    | us-east-1 | ACM certificate for apex + www (CloudFront needs us-east-1)    |
+| `malanius-dev-prod-web-infra`      | eu-west-1 | Private S3 bucket, CloudFront, Route 53 records, SSM params    |
+| `malanius-dev-prod-web-content`    | eu-west-1 | Uploads `website/dist` to the bucket, invalidates CloudFront   |
 
-**Keeping now playing fresh**: data only updates on build. For a daily refresh, create a deploy
-hook on the host (a secret URL that triggers a build) and call it on a schedule, e.g. a GitHub
-Actions workflow:
+How requests are handled (`src/website/`):
 
-```yaml
-on:
-  schedule: [{ cron: '0 5 * * *' }]
-jobs:
-  rebuild:
-    runs-on: ubuntu-latest
-    steps:
-      - run: curl -X POST "${{ secrets.DEPLOY_HOOK_URL }}"
+- `viewer-request.js` (CloudFront Function) redirects `www.malanius.dev` → `malanius.dev` with a
+  301 and appends `index.html` to directory URLs (`/blog/tech/` → `/blog/tech/index.html`); S3
+  behind Origin Access Control has no directory index of its own.
+- Missing pages: S3 answers 403 (CloudFront may only read objects, not list them), and both 403
+  and 404 map to `/404.html` with status 404.
+- Caching uses the managed `CachingOptimized` policy; every deploy invalidates `/*`. Responses
+  get the managed security headers policy (HSTS, nosniff, frame options, …).
+- The content stack finds the bucket and distribution through SSM parameters written by the infra
+  stack (`/prod/malanius-dev/…`), so content deploys never touch the infra stack.
+- The hosted zone ID and domain are in `src/website/domain.ts`.
+
+### Pipeline
+
+`.github/workflows/deploy.yaml`, three jobs:
+
+1. **build**: installs, restores the now playing cache, builds the site with the `MAL_CLIENT_ID`
+   secret, uploads `website/dist` as an artifact.
+2. **diff**: `cdk diff prod/*`, so the plan is in the logs.
+3. **deploy**: `cdk deploy prod/*`, gated by the GitHub `prod` environment.
+
+Triggers: push to `main`, daily at 04:00 UTC (keeps now playing fresh), and manually from the
+Actions tab ("Run workflow"). Runs never overlap.
+
+The now playing fallback cache (`website/node_modules/.cache`) is carried between runs with
+`actions/cache`; every run saves a new copy, the next one restores the latest.
+
+### Deploying from your machine
+
+```sh
+aws login --profile malanius          # or however your session starts
+export AWS_PROFILE=malanius
+
+mise run diff                          # builds the site, then cdk diff prod/*
+mise run deploy                        # builds the site, then cdk deploy prod/*
+bunx cdk deploy prod/web-content       # a single stack (site must be built)
 ```
+
+### First deploy (one-time setup)
+
+1. **Bootstrap both regions** (skip any that already are):
+   ```sh
+   bunx cdk bootstrap aws://<account-id>/eu-west-1 aws://<account-id>/us-east-1
+   ```
+2. **Deploy everything locally once**: `mise run deploy`. This creates the deploy role too; copy
+   the `DeployRoleArn` output.
+3. **Create the GitHub repo** `Malanius/malanius.dev` and push (see
+   [bookmarks and pushing](#bookmarks-and-pushing)).
+4. **Repo settings** → Secrets and variables → Actions:
+   - variable `PROD_DEPLOY_ROLE_ARN` = the role ARN from step 2
+   - variable `AWS_REGION` = `eu-west-1`
+   - secret `MAL_CLIENT_ID`
+5. **Repo settings** → Environments → create `prod`. Adding required reviewers there makes every
+   deploy wait for approval, including the daily scheduled one, so leave it without reviewers
+   unless you want that.
+
+After that, pushing to `main` deploys.
+
+### Costs
+
+Near zero at personal-site traffic: CloudFront's always-free tier (1 TB, 10M requests a month),
+pennies of S3, $0.50/month for the hosted zone. The deploy Lambda (BucketDeployment) runs only
+during deploys. WAF, once added, is the first real cost.
 
 ## Working with jj
 
@@ -341,7 +414,7 @@ jj file untrack <path>         # stop tracking (add to .gitignore first)
 ```
 
 jj snapshots every file automatically, so anything not in `.gitignore` ends up tracked. Generated
-stuff (`dist/`, `.astro/`, `node_modules/`, `.env`, `.playwright-mcp/`) is already ignored.
+stuff (`website/dist/`, `.astro/`, `node_modules/`, `cdk.out/`, `.env`, `.playwright-mcp/`) is already ignored.
 
 ### Bookmarks and pushing
 
@@ -349,7 +422,7 @@ There's no bookmark (jj's branch) or remote yet. Before the first push:
 
 ```sh
 jj bookmark create main -r @-              # point main at the last commit
-jj git remote add origin <repo-url>        # e.g. git@github.com:malanius/<repo>.git
+jj git remote add origin git@github.com:Malanius/malanius.dev.git
 jj git push --bookmark main --allow-new
 ```
 
@@ -376,12 +449,12 @@ Commit messages follow Conventional Commits: `feat:`, `fix:`, `chore:`, `docs:`.
 ## Troubleshooting
 
 **Deleted post still shows up / new post doesn't.** Astro caches content in
-`node_modules/.astro/data-store.json`. It goes stale in edge cases, notably when the blog folder
+`website/node_modules/.astro/data-store.json`. It goes stale in edge cases, notably when the blog folder
 becomes completely empty, or when a post moves between flat and folder layout (a one-time
 "Duplicate id" warning). Fix:
 
 ```sh
-rm node_modules/.astro/data-store.json && npm run build
+cd website && rm node_modules/.astro/data-store.json && bun run build
 ```
 
 For the dev server, stop it, delete the file, start again.
@@ -395,7 +468,7 @@ isn't set; the build used cached data (or skipped the rows). Check `.env` or the
 **Favicon doesn't update.** Browsers cache favicons hard; hard-reload or open in a private window.
 
 **Editor shows red errors but the build passes.** Usually a stale TypeScript server; reload the
-editor window. `npx astro sync` regenerates Astro's types.
+editor window. `bunx astro sync` (in `website/`) regenerates Astro's types.
 
 ## Astro in five minutes
 
@@ -419,19 +492,19 @@ const posts = await getPosts();
 </style>
 ```
 
-- **Static output.** Everything runs once during `npm run build`; the result is plain HTML/CSS.
-  That's why now playing needs a rebuild to update, and why the `fetch()` calls in `src/lib/` are
+- **Static output.** Everything runs once during the build; the result is plain HTML/CSS.
+  That's why now playing needs a rebuild to update, and why the `fetch()` calls in `website/src/lib/` are
   fine (they run on your machine or the build host, not in visitors' browsers).
 - **Scoped styles.** `<style>` in a component only affects that component. Use `:global(…)` to
   escape, or put shared styles in `global.css`.
 - **Browser JavaScript** needs a `<script>` tag (see the theme toggle in `Header.astro` or the
   path display in `404.astro`).
-- **Content collections** (`src/content.config.ts`) turn a folder of Markdown into typed data
+- **Content collections** (`website/src/content.config.ts`) turn a folder of Markdown into typed data
   with validated frontmatter. Query with `getCollection('blog')`; each entry has `id` (from the
   file name), `data` (frontmatter) and a renderable body.
 - **Dynamic routes.** `[category]` and `[...slug]` in file names are placeholders;
   `getStaticPaths()` in those files lists every value to generate a page for.
-- **`public/`** is copied verbatim; `src/` is processed (bundled, optimized).
+- **`website/public/`** is copied verbatim; `website/src/` is processed (bundled, optimized).
 - `import.meta.env.X` reads env vars (from `.env` locally, from the host when deployed).
 
 Docs: <https://docs.astro.build>
