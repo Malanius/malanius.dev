@@ -3,16 +3,27 @@ node = { version = "24", postinstall = "corepack enable" }
 bun = "latest"
 "npm:aws-cdk" = "latest"
 
+[tasks.web]
+description = "Run the website dev server"
+dir = "website"
+run = "bun run dev"
+
+[tasks."web:build"]
+description = "Build the website into website/dist"
+run = "bunx projen web:build"
+
 [tasks.diff]
-description = "Diff the CDK stack against the deployed stacks of specified environment"
+description = "Build the website, then diff the CDK stack against the deployed stacks of specified environment"
+depends = ["web:build"]
 usage = '''
-arg "<env>" help="The target environment to diff against" default="dev"
+arg "<env>" help="The target environment to diff against" default="prod"
 '''
 run = "cdk diff ${usage_env?}/*"
 
 [tasks.deploy]
-description = "Deploy the CDK stacks to the specified environment"
+description = "Build the website, then deploy the CDK stacks to the specified environment"
+depends = ["web:build"]
 usage = '''
-arg "<env>" help="The target environment to deploy to" default="dev"
+arg "<env>" help="The target environment to deploy to" default="prod"
 '''
 run = "cdk deploy ${usage_env?}/*"
