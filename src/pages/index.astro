@@ -7,6 +7,8 @@ import { monthDay } from '../lib/format';
 const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
+
+const interests = ['anime', 'coding', 'games', 'making things', 'manga', 'music', 'pondering the universe', 'tech'];
 ---
 
 <BaseLayout title="malanius.dev" active="home">
@@ -21,8 +23,9 @@ const posts = (await getCollection('blog'))
           both, along with the odd musing about life and existence.
         </p>
         <p class="interests muted">
-          $ cat interests.txt <span class="output">→ anime · coding · games · making things · manga · music ·
-          pondering the universe · tech</span>
+          $ cat interests.txt <span class="output">→ {interests.map((item, i) => (
+            <><span class="item">{item}{i < interests.length - 1 && ' ·'}</span>{' '}</>
+          ))}</span>
         </p>
       </div>
     </div>
@@ -91,6 +94,11 @@ const posts = (await getCollection('blog'))
 
   .output {
     color: var(--green);
+  }
+
+  /* Wrap between items, never inside one */
+  .item {
+    white-space: nowrap;
   }
 
   .cards {
