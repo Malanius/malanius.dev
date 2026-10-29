@@ -6,7 +6,8 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
-  active: 'home' | 'garden' | 'blog' | 'projects' | 'skills';
+  /** Highlighted nav item; omit on pages outside the menu */
+  active?: 'home' | 'garden' | 'blog' | 'projects' | 'skills';
   /** RSS feed advertised in <head>; defaults to the all-posts feed */
   feed?: { title: string; href: string };
 }

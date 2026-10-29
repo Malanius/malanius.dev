@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 · malanius.dev">
+  <div class="page-pad">
+    <h1 class="page-title">404 <span class="jp">「迷子」</span></h1>
+    <p class="page-subtitle">this page wandered off. or never existed. hard to say.</p>
+
+    <div class="shell">
+      <div><span class="muted">$</span> cd <span class="arg" id="missing-path">this-page</span></div>
+      <div class="err">cd: no such file or directory</div>
+      <div><span class="muted">$</span> ls ~</div>
+      <div class="ls">
+        <a href="/">home/</a>
+        <a href="/projects/">projects/</a>
+        <a href="/skills/">skills/</a>
+        <a href="/blog/">blog/</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<!-- Static page, so the requested path is only known in the browser -->
+<script is:inline>
+  document.getElementById('missing-path').textContent = decodeURI(location.pathname);
+</script>
+
+<style>
+  .shell {
+    margin-top: 28px;
+    font-size: 13px;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+  }
+
+  .arg {
+    color: var(--green);
+  }
+
+  .err {
+    color: var(--red);
+  }
+
+  .ls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+  }
+</style>
