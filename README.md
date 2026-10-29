@@ -4,18 +4,41 @@ Personal site: projects, skills, blog. Static [Astro 5](https://docs.astro.build
 colors, JetBrains Mono everywhere. Hosted on S3 behind CloudFront, all of it defined with
 [AWS CDK](https://docs.aws.amazon.com/cdk/) in this repo.
 
-- [Quick start](#quick-start)
-- [Repo map](#repo-map)
-- [Writing blog posts](#writing-blog-posts)
-- [Projects, skills, socials](#projects-skills-socials)
-- [Icons](#icons)
-- [Home page and now playing](#home-page-and-now-playing)
-- [Styling and theme](#styling-and-theme)
-- [The garden (hidden)](#the-garden-hidden)
-- [Infrastructure and deploying](#infrastructure-and-deploying)
-- [Working with jj](#working-with-jj)
-- [Troubleshooting](#troubleshooting)
-- [Astro in five minutes](#astro-in-five-minutes)
+- [malanius.dev](#malaniusdev)
+  - [Quick start](#quick-start)
+  - [Repo map](#repo-map)
+  - [Writing blog posts](#writing-blog-posts)
+    - [A new post](#a-new-post)
+    - [Images](#images)
+    - [What Markdown supports here](#what-markdown-supports-here)
+    - [Drafts](#drafts)
+    - [Categories](#categories)
+  - [Projects, skills, socials](#projects-skills-socials)
+    - [Projects (`website/src/data/projects.ts`)](#projects-websitesrcdataprojectsts)
+    - [Skills (`website/src/data/skills.ts`)](#skills-websitesrcdataskillsts)
+    - [Socials (`website/src/data/socials.ts`)](#socials-websitesrcdatasocialsts)
+  - [Icons](#icons)
+  - [Home page and now playing](#home-page-and-now-playing)
+    - [Intro and interests](#intro-and-interests)
+    - [Now playing](#now-playing)
+  - [Styling and theme](#styling-and-theme)
+    - [Colors](#colors)
+    - [Theme toggle](#theme-toggle)
+    - [Shared classes](#shared-classes)
+    - [Layout notes](#layout-notes)
+  - [The garden (hidden)](#the-garden-hidden)
+  - [Infrastructure and deploying](#infrastructure-and-deploying)
+    - [What runs where](#what-runs-where)
+    - [Pipeline](#pipeline)
+    - [Deploying from your machine](#deploying-from-your-machine)
+    - [First deploy (one-time setup)](#first-deploy-one-time-setup)
+    - [Costs](#costs)
+  - [Working with jj](#working-with-jj)
+    - [Bookmarks and pushing](#bookmarks-and-pushing)
+    - [Draft posts](#draft-posts)
+  - [Troubleshooting](#troubleshooting)
+  - [Astro in five minutes](#astro-in-five-minutes)
+  - [License](#license)
 
 ## Quick start
 
@@ -52,7 +75,7 @@ The site builds without it; anime and manga then come from the cache or are skip
 Two projects in one repo, like aws-community-day-cz: the CDK app at the root, the site in
 `website/`.
 
-```
+```text
 .projenrc.ts, projenrc/  CDK project config (projen); generates package.json, tsconfig, …
 src/                     CDK app
   main.ts                  app entry: name, env, region
@@ -93,18 +116,18 @@ not managed by projen.
 
 Pages and their URLs (paths relative to `website/src/`):
 
-| File                                  | URL                                   |
-| ------------------------------------- | ------------------------------------- |
-| `pages/index.astro`                   | `/`                                   |
-| `pages/projects.astro`                | `/projects/`                          |
-| `pages/skills.astro`                  | `/skills/`                            |
-| `pages/blog/index.astro`              | `/blog/`                              |
-| `pages/blog/[category]/index.astro`   | `/blog/tech/`, `/blog/maker/`, …      |
-| `pages/blog/[...slug].astro`          | `/blog/<post>/`                       |
-| `pages/rss.xml.js`                    | `/rss.xml` (all posts)                |
-| `pages/blog/[category]/rss.xml.js`    | `/blog/<category>/rss.xml`            |
-| `pages/404.astro`                     | shown for any missing URL             |
-| `pages/_garden/`                      | nothing: `_` prefix hides it          |
+| File                                | URL                              |
+| ----------------------------------- | -------------------------------- |
+| `pages/index.astro`                 | `/`                              |
+| `pages/projects.astro`              | `/projects/`                     |
+| `pages/skills.astro`                | `/skills/`                       |
+| `pages/blog/index.astro`            | `/blog/`                         |
+| `pages/blog/[category]/index.astro` | `/blog/tech/`, `/blog/maker/`, … |
+| `pages/blog/[...slug].astro`        | `/blog/<post>/`                  |
+| `pages/rss.xml.js`                  | `/rss.xml` (all posts)           |
+| `pages/blog/[category]/rss.xml.js`  | `/blog/<category>/rss.xml`       |
+| `pages/404.astro`                   | shown for any missing URL        |
+| `pages/_garden/`                    | nothing: `_` prefix hides it     |
 
 ## Writing blog posts
 
@@ -124,12 +147,12 @@ tags: [astro, aws]
 Text starts here. Normal Markdown.
 ```
 
-| Field      | Required | Notes                                                        |
-| ---------- | -------- | ------------------------------------------------------------ |
-| `title`    | yes      | Quote it if it contains `:`                                  |
-| `date`     | yes      | `YYYY-MM-DD`. Posts sort newest first by this.               |
-| `category` | yes      | One of `tech`, `maker`, `creative`, `musings`                |
-| `tags`     | no       | Shown on the post. Free-form, no tag pages.                  |
+| Field      | Required | Notes                                          |
+| ---------- | -------- | ---------------------------------------------- |
+| `title`    | yes      | Quote it if it contains `:`                    |
+| `date`     | yes      | `YYYY-MM-DD`. Posts sort newest first by this. |
+| `category` | yes      | One of `tech`, `maker`, `creative`, `musings`  |
+| `tags`     | no       | Shown on the post. Free-form, no tag pages.    |
 
 A typo in the frontmatter (missing title, unknown category) fails the build with a message
 pointing at the file. That's the schema in `website/src/content.config.ts` doing its job.
@@ -144,7 +167,7 @@ Put images next to the post and use a relative path. Astro then optimizes them a
 
 Two layouts work; pick per post:
 
-```
+```text
 # flat: post file + folder of the same name for its images
 website/src/content/blog/terminal-setup.md
 website/src/content/blog/terminal-setup/stack.png
@@ -260,11 +283,11 @@ interests are the `interests` array in the frontmatter (keep it sorted).
 
 Filled automatically at **build time**, so it's as fresh as the last build:
 
-| Rows        | Source                                                                 | You control it by                    |
-| ----------- | ---------------------------------------------------------------------- | ------------------------------------ |
-| 🎮 2 games  | Trello board [95WkzKxV](https://trello.com/b/95WkzKxV), list "Playing" | Card order: top 2 cards show         |
-| 📺 2 anime  | MAL list, status "watching"                                            | Updating episodes on MAL             |
-| 📖 2 manga  | MAL list, status "reading"                                             | Updating chapters/volumes on MAL     |
+| Rows       | Source                                                                 | You control it by                |
+| ---------- | ---------------------------------------------------------------------- | -------------------------------- |
+| 🎮 2 games | Trello board [95WkzKxV](https://trello.com/b/95WkzKxV), list "Playing" | Card order: top 2 cards show     |
+| 📺 2 anime | MAL list, status "watching"                                            | Updating episodes on MAL         |
+| 📖 2 manga | MAL list, status "reading"                                             | Updating chapters/volumes on MAL |
 
 - MAL sorts by last update, so whatever you touched most recently shows first. Episodes show as
   `ep 04/13`; manga shows volume if you track it, otherwise chapter.
@@ -285,7 +308,7 @@ fine).
 Catppuccin, defined as CSS variables in `website/src/styles/global.css` for both flavors: **mocha**
 (dark) and **latte** (light). Always use the variables, never hex values, so both themes work:
 
-```
+```text
 text:    --text --subtext1 --subtext0 --overlay0
 surface: --crust --mantle --base --surface0 --surface1
 accent:  --mauve --blue --lavender --sapphire --teal --green --yellow --peach --red --pink
@@ -332,12 +355,12 @@ Heads-up: the `[[note-slug]]` syntax is active in all Markdown, blog posts inclu
 
 Everything is in one AWS account, one `prod` environment (no previews), region `eu-west-1`:
 
-| Stack                              | Region    | Contents                                                       |
-| ---------------------------------- | --------- | -------------------------------------------------------------- |
-| `malanius-dev-prod-gh-deploy`      | eu-west-1 | IAM role GitHub Actions assumes (trusts `Malanius/malanius.dev`) |
-| `malanius-dev-prod-certificate`    | us-east-1 | ACM certificate for apex + www (CloudFront needs us-east-1)    |
-| `malanius-dev-prod-web-infra`      | eu-west-1 | Private S3 bucket, CloudFront, Route 53 records, SSM params    |
-| `malanius-dev-prod-web-content`    | eu-west-1 | Uploads `website/dist` to the bucket, invalidates CloudFront   |
+| Stack                           | Region    | Contents                                                         |
+| ------------------------------- | --------- | ---------------------------------------------------------------- |
+| `malanius-dev-prod-gh-deploy`   | eu-west-1 | IAM role GitHub Actions assumes (trusts `Malanius/malanius.dev`) |
+| `malanius-dev-prod-certificate` | us-east-1 | ACM certificate for apex + www (CloudFront needs us-east-1)      |
+| `malanius-dev-prod-web-infra`   | eu-west-1 | Private S3 bucket, CloudFront, Route 53 records, SSM params      |
+| `malanius-dev-prod-web-content` | eu-west-1 | Uploads `website/dist` to the bucket, invalidates CloudFront     |
 
 How requests are handled (`src/website/`):
 
@@ -381,9 +404,11 @@ bunx cdk deploy prod/web-content       # a single stack (site must be built)
 ### First deploy (one-time setup)
 
 1. **Bootstrap both regions** (already done for this account; needed only for a new one):
+
    ```sh
    bunx cdk bootstrap aws://<account-id>/eu-west-1 aws://<account-id>/us-east-1
    ```
+
 2. **Deploy everything locally once**: `mise run deploy`. This creates the deploy role too; copy
    the `DeployRoleArn` output.
 3. **Create the GitHub repo** `Malanius/malanius.dev` and push (see
