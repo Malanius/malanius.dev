@@ -19,6 +19,7 @@ export class AppStage extends Stage {
       new GitHubDeploy(this, 'gh-deploy', {
         stackName: `${appName}-${appEnv}-gh-deploy`,
         repository: 'Malanius/malanius.dev',
+        branch: 'main',
       });
     }
 

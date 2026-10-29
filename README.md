@@ -355,12 +355,12 @@ Heads-up: the `[[note-slug]]` syntax is active in all Markdown, blog posts inclu
 
 Everything is in one AWS account, one `prod` environment (no previews), region `eu-west-1`:
 
-| Stack                           | Region    | Contents                                                         |
-| ------------------------------- | --------- | ---------------------------------------------------------------- |
-| `malanius-dev-prod-gh-deploy`   | eu-west-1 | IAM role GitHub Actions assumes (trusts `Malanius/malanius.dev`) |
-| `malanius-dev-prod-certificate` | us-east-1 | ACM certificate for apex + www (CloudFront needs us-east-1)      |
-| `malanius-dev-prod-web-infra`   | eu-west-1 | Private S3 bucket, CloudFront, Route 53 records, SSM params      |
-| `malanius-dev-prod-web-content` | eu-west-1 | Uploads `website/dist` to the bucket, invalidates CloudFront     |
+| Stack                           | Region    | Contents                                                                   |
+| ------------------------------- | --------- | -------------------------------------------------------------------------- |
+| `malanius-dev-prod-gh-deploy`   | eu-west-1 | IAM role GitHub Actions assumes (trusts `main` of `Malanius/malanius.dev`) |
+| `malanius-dev-prod-certificate` | us-east-1 | ACM certificate for apex + www (CloudFront needs us-east-1)                |
+| `malanius-dev-prod-web-infra`   | eu-west-1 | Private S3 bucket, CloudFront, Route 53 records, SSM params                |
+| `malanius-dev-prod-web-content` | eu-west-1 | Uploads `website/dist` to the bucket, invalidates CloudFront               |
 
 How requests are handled (`src/website/`):
 
@@ -385,7 +385,8 @@ How requests are handled (`src/website/`):
 3. **deploy**: `cdk deploy prod/*`. No approval gate, so the scheduled runs deploy unattended.
 
 Triggers: push to `main`, daily at 04:00 UTC (keeps now playing fresh), and manually from the
-Actions tab ("Run workflow"). Runs never overlap.
+Actions tab ("Run workflow"). Runs never overlap. The deploy role only trusts `main`, so a run
+started from any other branch fails at the AWS credentials step.
 
 The now playing fallback cache (`website/node_modules/.cache`) is carried between runs with
 `actions/cache`; every run saves a new copy, the next one restores the latest.
