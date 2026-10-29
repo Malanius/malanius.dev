@@ -10,6 +10,11 @@ const appName = 'malanius-dev';
 const appEnv = env.APP_ENV || 'prod';
 const app = new App();
 
-new AppStage(app, appEnv, { appName, appEnv });
+new AppStage(app, appEnv, {
+  appName,
+  appEnv,
+  // Explicit env is required for the cross-region certificate reference
+  env: { account: env.CDK_DEFAULT_ACCOUNT, region: 'eu-west-1' },
+});
 
 app.synth();
