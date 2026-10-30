@@ -388,9 +388,13 @@ How requests are handled (`src/website/`):
 2. **diff**: `cdk diff prod/*`, so the plan is in the logs.
 3. **deploy**: `cdk deploy prod/*`. No approval gate, so the scheduled runs deploy unattended.
 
-Triggers: push to `main`, daily at 04:00 UTC (keeps now playing fresh), and manually from the
+Triggers: push to `main`, daily at 04:23 UTC (keeps now playing fresh), and manually from the
 Actions tab ("Run workflow"). Runs never overlap. The deploy role only trusts `main`, so a run
 started from any other branch fails at the AWS credentials step.
+
+Schedules are best-effort: GitHub runs them late or skips them under load, worst at the top of
+the hour (hence `:23`). A skipped day just leaves yesterday's now playing up. GitHub also
+disables schedules in a public repo after 60 days without commits; re-enable from the Actions tab.
 
 The role matches GitHub's immutable OIDC subject, which names the owner and repo by ID
 (`repo:Malanius@6827667/malanius.dev@1438536452:ref:refs/heads/main`), set in `src/app.stage.ts`.
@@ -457,6 +461,19 @@ Near zero at personal-site traffic: CloudFront's always-free tier (1 TB, 10M req
 counted across all edges, so the price class doesn't matter inside it), pennies of S3,
 $0.50/month for the hosted zone. The deploy Lambda (BucketDeployment) runs only
 during deploys. WAF, once added, is the first real cost.
+
+Daily deploys add nothing noticeable:
+
+- **Invalidation** happens only when the built site differs from the last deploy (CloudFormation
+  skips an unchanged asset), and `/*` counts as one path. The first 1,000 paths a month are free;
+  a deploy a day is ~30.
+- **Re-filling caches** after an invalidation: CloudFront → S3 transfer is free, S3 GETs are
+  $0.0004 per 1,000.
+- **BucketDeployment Lambda**: about a minute at 512 MB per deploy, well inside the Lambda free tier.
+- **GitHub Actions** minutes are free for public repos.
+- **CDK asset zips** pile up in the bootstrap staging bucket (`cdk-hnb659fds-assets-…`), one per
+  distinct site build. Tiny (the site is ~200 KB); clean up with `bunx cdk gc --unstable=gc` if it ever
+  matters.
 
 ## Working with jj
 

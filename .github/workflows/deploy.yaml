@@ -5,7 +5,7 @@ on:
     branches: [main]
   # Daily rebuild keeps now playing (MAL, Trello) fresh
   schedule:
-    - cron: "0 4 * * *"
+    - cron: "23 4 * * *" # off the hour: GitHub delays or drops :00 schedules under load
   workflow_dispatch:
 
 permissions:
