@@ -20,6 +20,8 @@ const tech = {
   shell: { icon: 'fa-solid fa-terminal', color: 'var(--teal)', label: 'Shell' },
   linux: { icon: 'fa-brands fa-linux', color: 'var(--yellow)', label: 'Linux' },
   aws: { icon: 'fa-brands fa-aws', color: 'var(--peach)', label: 'AWS' },
+  sst: { icon: 'si-sst', color: 'var(--peach)', label: 'SST' },
+  dioxus: { icon: 'fa-solid fa-atom', color: 'var(--sapphire)', label: 'Dioxus' },
   discord: { icon: 'fa-brands fa-discord', color: 'var(--lavender)', label: 'Discord' },
   npm: { icon: 'fa-brands fa-npm', color: 'var(--red)', label: 'npm' },
   tui: { icon: 'fa-solid fa-table-cells', color: 'var(--green)', label: 'ratatui' },
@@ -106,6 +108,14 @@ export const code: Project[] = [
       },
       { icon: 'fa-solid fa-globe', href: 'https://awscommunityday.cz', label: 'the web' },
     ],
+  },
+  {
+    name: 'etc',
+    status: 'done',
+    description:
+      "Farewell countdown to my last day at a job, showing a random terror the team would face without me, then counting how long they've missed me. Rust on WebAssembly with Dioxus, deployed with SST v2.",
+    tech: [tech.rust, tech.dioxus, tech.sst, tech.aws],
+    links: [github('etc')],
   },
   {
     name: 'hyprwaifu',
