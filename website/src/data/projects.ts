@@ -72,6 +72,14 @@ export const code: Project[] = [
     links: [github('toggl-export')],
   },
   {
+    name: 'advent-of-code',
+    status: 'active',
+    description:
+      'My yearly December tradition since 2021. Python through 2024, with a script that scaffolds each day and some animated visualizations; Rust from 2025 on.',
+    tech: [tech.rust, tech.python],
+    links: [github('advent-of-code')],
+  },
+  {
     name: 'cdk-ts-serverless-template',
     status: 'active',
     description:
