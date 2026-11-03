@@ -45,7 +45,7 @@ export const tech: SkillGroup[] = [
       },
       { name: 'AWS CDK', icon: 'fa-solid fa-cubes', color: 'var(--mauve)', level: 5 },
       { name: 'serverless & event-driven', icon: 'fa-solid fa-bolt', color: 'var(--yellow)', level: 5 },
-      { name: 'SST', icon: 'si-sst', color: 'var(--peach)', level: 4, note: 'v2, on top of CDK' },
+      { name: 'SST v2', icon: 'si-sst', color: 'var(--peach)', level: 4, note: 'on top of CDK' },
       { name: 'security', icon: 'fa-solid fa-shield-halved', color: 'var(--green)', level: 3 },
       { name: 'Terraform', icon: 'si-terraform', color: 'var(--lavender)', level: 3 },
     ],

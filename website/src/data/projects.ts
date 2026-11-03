@@ -23,7 +23,7 @@ const tech = {
   linux: { icon: 'fa-brands fa-linux', color: 'var(--yellow)', label: 'Linux' },
   aws: { icon: 'fa-brands fa-aws', color: 'var(--peach)', label: 'AWS' },
   cdk: { icon: 'fa-solid fa-cubes', color: 'var(--mauve)', label: 'AWS CDK' },
-  sst: { icon: 'si-sst', color: 'var(--peach)', label: 'SST' },
+  sst: { icon: 'si-sst', color: 'var(--peach)', label: 'SST v2' },
   dioxus: { icon: 'fa-solid fa-atom', color: 'var(--sapphire)', label: 'Dioxus' },
   discord: { icon: 'fa-brands fa-discord', color: 'var(--lavender)', label: 'Discord' },
   tui: { icon: 'fa-solid fa-table-cells', color: 'var(--green)', label: 'ratatui' },
