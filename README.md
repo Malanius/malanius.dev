@@ -47,7 +47,7 @@ bun as the package manager.
 
 ```sh
 bun install                  # CDK project (repo root)
-bunx projen web:install      # website, same as `cd website && bun install`
+bunx projen web:install      # website, same as `cd website && bunx projen install:ci`
 
 mise run web                 # dev server on http://localhost:4321, reloads on save
 mise run web:build           # static site into website/dist/
@@ -76,7 +76,7 @@ Two projects in one repo, like aws-community-day-cz: the CDK app at the root, th
 `website/`.
 
 ```text
-.projenrc.ts, projenrc/  CDK project config (projen); generates package.json, tsconfig, …
+.projenrc.ts, projenrc/  projen config for the CDK app and website/; generates package.json, tsconfig, …
 src/                     CDK app
   main.ts                  app entry: name, env, region
   app.stage.ts             the prod stage and its stacks
@@ -85,7 +85,7 @@ src/                     CDK app
 .github/workflows/       deploy pipeline
 .mise.toml               tools and tasks (web, web:build, diff, deploy)
 
-website/                 the Astro site, its own package.json
+website/                 the Astro site, a projen subproject with its own package.json and bun.lock
   public/                  copied to the site as-is (favicon.svg)
   src/
     content/blog/          blog posts (Markdown)
@@ -111,8 +111,10 @@ website/                 the Astro site, its own package.json
 ```
 
 **Don't edit projen-generated files** (`package.json`, `tsconfig.json`, `cdk.json`, `.gitignore`,
-… they say so at the top). Change `.projenrc.ts` and run `bunx projen`. The website's files are
-not managed by projen.
+… they say so at the top). Change `.projenrc.ts` and run `bunx projen`. The website is a projen
+subproject defined in `projenrc/website.ts`: its `package.json`, `.gitignore`, `.gitattributes` and
+`.projen/*` are generated, and its dependencies go in `deps`/`devDeps` there. `astro.config.mjs`
+and `website/tsconfig.json` (Astro's own) are still edited by hand.
 
 Pages and their URLs (paths relative to `website/src/`):
 

@@ -343,7 +343,7 @@
       "description": "Build the website into website/dist, deployed by the web content stack",
       "steps": [
         {
-          "exec": "bun run build"
+          "exec": "bunx projen build"
         }
       ],
       "cwd": "website"
@@ -353,7 +353,7 @@
       "description": "Install the website dependencies",
       "steps": [
         {
-          "exec": "bun install --frozen-lockfile"
+          "exec": "bunx projen install:ci"
         }
       ],
       "cwd": "website"

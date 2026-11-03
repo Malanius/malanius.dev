@@ -5,6 +5,7 @@ import { ReleaseTrigger } from 'projen/lib/release';
 
 import { biomeOptions } from './projenrc/biome';
 import { context } from './projenrc/cdk';
+import { websiteProject } from './projenrc/website';
 
 const cdkVersion = '2.274.0';
 const powertoolsVersion = 'v2.36.0';
@@ -110,19 +111,20 @@ project.addTask('check', {
   exec: 'bunx biome check --write',
 });
 
-// The Astro site lives in website/ with its own package.json
+// The Astro site in website/, a projen subproject with its own package.json and bun.lock
+websiteProject(project);
 project.gitignore.exclude('.env', '.playwright-mcp/');
 
 project.addTask('web:install', {
   description: 'Install the website dependencies',
   cwd: 'website',
-  exec: 'bun install --frozen-lockfile',
+  exec: 'bunx projen install:ci',
 });
 
 project.addTask('web:build', {
   description: 'Build the website into website/dist, deployed by the web content stack',
   cwd: 'website',
-  exec: 'bun run build',
+  exec: 'bunx projen build',
 });
 
 project.addTask('check:staged', {

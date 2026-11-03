@@ -81,8 +81,10 @@ projen generates `package.json`, `tsconfig.json`, `cdk.json`, `biome.jsonc`, `.g
 `.projenrc.ts` (or `projenrc/biome.ts`, `projenrc/cdk.ts`), then run `bunx projen`. Add root
 dependencies through `deps`/`devDeps` in `.projenrc.ts`, not `bun add`.
 
-`website/` is not managed by projen. Edit its `package.json` normally and use `bun add` in
-`website/`.
+`website/` is a projen subproject (`projenrc/website.ts`). Its `package.json`, `.gitignore`,
+`.gitattributes` and `.projen/*` are generated too: add site dependencies through `deps`/`devDeps`
+in `projenrc/website.ts`, not `bun add`. `astro.config.mjs` and `website/tsconfig.json` stay
+hand-edited.
 
 ## Website conventions
 
