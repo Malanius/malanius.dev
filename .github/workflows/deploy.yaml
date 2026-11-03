@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Prepare environment
         uses: ./.github/workflows/prepare
@@ -33,7 +33,7 @@ jobs:
       # Last fetched MAL/Trello data, used when an API is down during the build.
       # Unique key so every run saves the latest data.
       - name: Restore now playing cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: website/node_modules/.cache
           key: now-playing-${{ github.run_id }}
@@ -46,7 +46,7 @@ jobs:
           MAL_CLIENT_ID: ${{ secrets.MAL_CLIENT_ID }}
 
       - name: Archive built website
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: website
           path: website/dist
@@ -58,10 +58,10 @@ jobs:
       APP_ENV: prod
     steps:
       - name: Git clone the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Download built website
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: website
           path: website/dist
@@ -85,10 +85,10 @@ jobs:
       APP_ENV: prod
     steps:
       - name: Git clone the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Download built website
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: website
           path: website/dist
