@@ -204,7 +204,10 @@ export const maker: Project[] = [
     description:
       "Offline door access on a Raspberry Pi: a keyboard card reader drives an electric lock through a relay, with access cards managed by master cards and every event logged. Based on brmlab's brmdoor.",
     tech: [tech.raspberryPi, tech.shell],
-    links: [github('brmdoor-lite')],
+    links: [
+      github('brmdoor-lite'),
+      { icon: 'si-brmlab', href: 'https://brmlab.cz', label: 'brmlab', title: 'brmlab hackerspace' },
+    ],
   },
 ];
 

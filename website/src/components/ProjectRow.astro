@@ -31,7 +31,11 @@ const { project } = Astro.props;
     )}
     {project.links?.map((link) => (
       <a href={link.href} title={link.title ?? `${project.name} on ${link.label}`} aria-label={link.title ?? `${project.name} on ${link.label}`}>
-        <i class={link.icon} />
+        {brandIcons[link.icon] ? (
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d={brandIcons[link.icon]} /></svg>
+        ) : (
+          <i class={link.icon} />
+        )}
       </a>
     ))}
   </div>

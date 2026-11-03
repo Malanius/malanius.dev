@@ -270,6 +270,9 @@ To add a brand icon:
 3. Add it to `website/src/data/brandIcons.ts` as `'si-<name>': '<path>'`.
 4. Use `'si-<name>'` as the icon.
 
+Icons from elsewhere (e.g. `si-brmlab`, from brmlab's own symbols) need to be a single path in
+a 24×24 viewBox; merge and rescale the shapes first, and note the source in a comment.
+
 Colors are always CSS variables from the palette: `var(--peach)`, `var(--blue)`, … (list in
 [styling](#styling-and-theme)).
 
