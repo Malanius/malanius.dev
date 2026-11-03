@@ -118,6 +118,14 @@ export const code: Project[] = [
     ],
   },
   {
+    name: 'spectra',
+    status: 'done',
+    description:
+      'Retro hi-fi spectrum analyzer for the terminal: captures whatever is playing through PipeWire and renders it in 13 styles, from classic peak-hold bars to a Julia set and an oscilloscope. Fully vibe-coded.',
+    tech: [tech.rust, tech.tui, tech.linux],
+    links: [github('spectra')],
+  },
+  {
     name: 'etc',
     status: 'done',
     description:
