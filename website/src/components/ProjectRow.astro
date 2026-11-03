@@ -14,6 +14,7 @@ const { project } = Astro.props;
     <div class="name">
       {project.name}
       {project.status && <span class:list={['status', project.status]}>{project.status}</span>}
+      {project.years && <span class="years">{project.years}</span>}
     </div>
     <div class="description">{project.description}</div>
   </div>
@@ -89,6 +90,13 @@ const { project } = Astro.props;
 
   .status.archived {
     color: var(--overlay0);
+  }
+
+  .years {
+    color: var(--subtext0);
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 6px;
   }
 
   .description {

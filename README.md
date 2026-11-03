@@ -220,6 +220,7 @@ Order in the file = order on the page.
 {
   name: 'pidjezdy',
   status: 'active',               // active | wip | planned | done | archived (optional)
+  years: '2017–2020',             // active years, '2025–' if ongoing (optional)
   description: 'One or two sentences.',
   tech: [tech.rust, tech.linux],  // icons from the `tech` map at the top of the file
   links: [github('pidjezdy')],    // optional; github() builds the GitHub link

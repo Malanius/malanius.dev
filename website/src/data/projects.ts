@@ -1,6 +1,8 @@
 export interface Project {
   name: string;
   status?: 'active' | 'wip' | 'planned' | 'done' | 'archived';
+  /** active years, e.g. '2017–2020', or '2025–' if ongoing */
+  years?: string;
   description: string;
   tech: { icon: string; color: string; label: string }[];
   /** title overrides the default "<name> on <label>" tooltip */
@@ -233,6 +235,7 @@ export const contributions: Project[] = [
   {
     name: 'super-productivity',
     status: 'planned',
+    years: '2025–',
     description:
       'Features for the todo app I run my days on, location-based reminders first. Already fixing its community CLI.',
     tech: [tech.typescript, tech.angular],
@@ -247,6 +250,7 @@ export const contributions: Project[] = [
   {
     name: 'bloom',
     status: 'done',
+    years: '2023',
     description:
       'Config from environment variables for the Rust REST API caching middleware, fixing the issue I had reported. My first real Rust codebase.',
     tech: [tech.rust],
@@ -262,6 +266,7 @@ export const contributions: Project[] = [
   {
     name: 'destination-sol',
     status: 'done',
+    years: '2017–2019',
     description:
       'Console commands, leveled console messages and a speed/velocity refactor for the open-source space shooter, plus contributor docs.',
     tech: [tech.java],
@@ -277,6 +282,7 @@ export const contributions: Project[] = [
   {
     name: 'terasology',
     status: 'done',
+    years: '2017–2020',
     description: 'Czech translations for the voxel game, and test fixes for its launcher.',
     tech: [tech.java],
     links: [
@@ -297,6 +303,7 @@ export const contributions: Project[] = [
   {
     name: 'cobol-examples',
     status: 'done',
+    years: '2016–2018',
     description:
       'Open COBOL examples for GnuCOBOL and AS/400, plus an SQLite binding, started with a former colleague to get some real COBOL out in public. I added AS/400 programs, its manual and fixes.',
     tech: [tech.cobol],
