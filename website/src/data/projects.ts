@@ -242,6 +242,27 @@ export const creative: Project[] = [
 
 export const contributions: Project[] = [
   {
+    name: 'drive-by-fixes',
+    status: 'active',
+    description:
+      'Omarchy help-menu shortcuts, DefinitelyTyped types for properties-reader, a froggit install-script fix, and a load of issues in the things I work with.',
+    tech: [],
+    links: [
+      {
+        icon: 'fa-solid fa-code-pull-request',
+        href: 'https://github.com/search?q=author%3AMalanius+is%3Apr+-user%3Amalanius&type=pullrequests',
+        label: 'GitHub',
+        title: 'all my pull requests on GitHub',
+      },
+      {
+        icon: 'fa-solid fa-circle-dot',
+        href: 'https://github.com/search?q=author%3AMalanius+is%3Aissue+-user%3Amalanius&type=issues',
+        label: 'GitHub',
+        title: 'all my issues on GitHub',
+      },
+    ],
+  },
+  {
     name: 'super-productivity',
     status: 'planned',
     years: '2025–',
@@ -328,33 +349,6 @@ export const contributions: Project[] = [
         href: 'https://github.com/Martinfx/SQLiteCobol',
         label: 'GitHub',
         title: 'SQLiteCobol: SQLite for OpenCobol',
-      },
-    ],
-  },
-  {
-    name: 'drive-by-fixes',
-    status: 'done',
-    description:
-      'Omarchy help-menu shortcuts, DefinitelyTyped types for properties-reader, and a froggit install-script fix.',
-    tech: [tech.shell, tech.typescript],
-    links: [
-      {
-        icon: 'fa-brands fa-github',
-        href: 'https://github.com/omacom/omarchy/pull/5756',
-        label: 'GitHub',
-        title: 'Omarchy: help-menu shortcuts',
-      },
-      {
-        icon: 'fa-brands fa-github',
-        href: 'https://github.com/DefinitelyTyped/DefinitelyTyped/pull/48429',
-        label: 'GitHub',
-        title: 'DefinitelyTyped: properties-reader types',
-      },
-      {
-        icon: 'fa-brands fa-github',
-        href: 'https://github.com/thewizardshell/froggit/pull/8',
-        label: 'GitHub',
-        title: 'froggit: install-script fix',
       },
     ],
   },
