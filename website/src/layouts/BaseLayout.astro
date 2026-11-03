@@ -10,6 +10,8 @@ interface Props {
   active?: 'home' | 'garden' | 'blog' | 'projects' | 'skills';
   /** RSS feed advertised in <head>; defaults to the all-posts feed */
   feed?: { title: string; href: string };
+  /** Pin the header, page title (desktop) and current section's `.section-cmd` while scrolling */
+  sticky?: boolean;
 }
 
 const {
@@ -17,6 +19,7 @@ const {
   description = 'Developer, anime enjoyer, and collector of half-finished side projects.',
   active,
   feed = { title: 'malanius.dev', href: '/rss.xml' },
+  sticky = false,
 } = Astro.props;
 ---
 
@@ -45,7 +48,7 @@ const {
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
   </head>
-  <body>
+  <body class:list={{ sticky }}>
     <div class="site">
       <Header active={active} />
       <main>
@@ -53,5 +56,21 @@ const {
       </main>
       <Footer />
     </div>
+    <script>
+      // Pinned bars on sticky pages stack under each other; their heights change when the header wraps
+      if (document.body.classList.contains('sticky')) {
+        const root = document.documentElement;
+        const bars = [
+          ['--sticky-header', document.querySelector('.site > header')],
+          ['--sticky-title', document.querySelector('.page-title')],
+        ] as const;
+        const observer = new ResizeObserver(() => {
+          for (const [name, el] of bars) {
+            if (el) root.style.setProperty(name, `${el.getBoundingClientRect().height}px`);
+          }
+        });
+        for (const [, el] of bars) if (el) observer.observe(el);
+      }
+    </script>
   </body>
 </html>

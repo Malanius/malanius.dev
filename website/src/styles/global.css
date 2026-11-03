@@ -132,6 +132,53 @@ a:hover {
   color: var(--overlay0);
 }
 
+/* `$ ls dir/` line above each section of a list page */
+.section-cmd {
+  font-size: 13px;
+}
+
+/*
+ * Long list pages (BaseLayout `sticky`): the header, the page title (desktop only) and the
+ * current section's command line stay pinned, stacked in that order. The heights come from
+ * BaseLayout's script; the fallbacks fit a single-line header.
+ * Padding gives the pinned bars room to breathe; the negative margins keep the resting layout.
+ */
+.sticky .site > header,
+.sticky .section-cmd {
+  position: sticky;
+  background: var(--base);
+}
+
+.sticky .site > header {
+  top: 0;
+  z-index: 3;
+}
+
+.sticky .section-cmd {
+  top: var(--sticky-header, 70px);
+  z-index: 1;
+  padding-top: 12px;
+  margin-top: -12px;
+}
+
+/* on phones the title would eat too much of the screen; the active nav item names the page */
+@media (min-width: 641px) {
+  .sticky .page-title {
+    position: sticky;
+    top: var(--sticky-header, 70px);
+    z-index: 2;
+    background: var(--base);
+    padding-top: 14px;
+    margin-top: -14px;
+  }
+
+  .sticky .section-cmd {
+    top: calc(var(--sticky-header, 70px) + var(--sticky-title, 52px));
+    padding-top: 6px;
+    margin-top: -6px;
+  }
+}
+
 /* Rendered markdown */
 .prose {
   color: var(--subtext1);

@@ -330,7 +330,8 @@ before the page paints, so there's no flash.
 ### Shared classes
 
 In `global.css`: `.panel` / `.panel-title` (the boxed cards), `.page-pad`, `.page-title`,
-`.page-subtitle`, `.jp` (the 「」 kanji labels), `.muted`, and `.prose` for post typography.
+`.page-subtitle`, `.jp` (the 「」 kanji labels), `.muted`, `.section-cmd` (the `$ ls dir/` line
+above each section of a list page), and `.prose` for post typography.
 
 ### Layout notes
 
@@ -339,6 +340,9 @@ In `global.css`: `.panel` / `.panel-title` (the boxed cards), `.page-pad`, `.pag
   things off-screen.
 - Checked down to 320px wide. Below 720px card grids go single-column; below 640px paddings
   shrink.
+- `<BaseLayout sticky>` (projects, skills) pins the header and the current section's
+  `.section-cmd` while scrolling, plus the `.page-title` above 640px. A script in
+  `BaseLayout.astro` measures the bar heights so they stack when the header wraps.
 
 ## The garden (hidden)
 

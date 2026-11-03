@@ -11,14 +11,14 @@ const sections = [
 ];
 ---
 
-<BaseLayout title="projects · malanius.dev" active="projects">
+<BaseLayout title="projects · malanius.dev" active="projects" sticky>
   <div class="page-pad">
     <h1 class="page-title">projects <span class="jp">「作品」</span></h1>
     <p class="page-subtitle">things I've built, in various states of done.</p>
 
     {sections.map((section) => (
       <section>
-        <div class="cmd muted">$ ls <span class="arg">{section.cmd}</span></div>
+        <div class="section-cmd muted">$ ls <span class="arg">{section.cmd}</span></div>
         <div class="list">
           {section.projects.map((project) => <ProjectRow project={project} />)}
         </div>
@@ -32,9 +32,8 @@ const sections = [
     margin-top: 32px;
   }
 
-  .cmd {
-    font-size: 13px;
-    margin-bottom: 4px;
+  .section-cmd {
+    padding-bottom: 4px;
   }
 
   .arg {
