@@ -56,7 +56,7 @@ Check a message with `echo "feat(web): …" | bunx commitlint`.
 
 ## Checks
 
-Tools come from mise (`.mise.toml`): node 24, bun, aws-cdk. bun is the package manager everywhere;
+Tools come from mise (`.mise.toml`): node 26, bun, aws-cdk. bun is the package manager everywhere;
 don't use npm or yarn, and don't create `package-lock.json` or `yarn.lock`.
 
 ```sh

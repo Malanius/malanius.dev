@@ -36,6 +36,7 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   github: false,
 
   packageManager: NodePackageManager.BUN,
+  minNodeVersion: '26.0.0',
 
   projenrcTs: true,
   tsconfig: {

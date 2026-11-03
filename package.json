@@ -36,7 +36,7 @@
     "@biomejs/biome": "^2.5",
     "@commitlint/config-conventional": "^19.8.1",
     "@types/aws-lambda": "^8.10.164",
-    "@types/node": "^24.19.2",
+    "@types/node": "^26",
     "aws-cdk": "^2",
     "bun-types": "^1.4.4",
     "commitlint": "^19.8.1",
@@ -59,6 +59,9 @@
     "aws-cdk-lib": "2.274.0",
     "constructs": "^10.5.1",
     "zod": "~4"
+  },
+  "engines": {
+    "node": ">= 26.0.0"
   },
   "devEngines": {
     "packageManager": {
