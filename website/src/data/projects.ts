@@ -22,6 +22,7 @@ const tech = {
   shell: { icon: 'fa-solid fa-terminal', color: 'var(--teal)', label: 'Shell' },
   linux: { icon: 'fa-brands fa-linux', color: 'var(--yellow)', label: 'Linux' },
   aws: { icon: 'fa-brands fa-aws', color: 'var(--peach)', label: 'AWS' },
+  cdk: { icon: 'fa-solid fa-cubes', color: 'var(--mauve)', label: 'AWS CDK' },
   sst: { icon: 'si-sst', color: 'var(--peach)', label: 'SST' },
   dioxus: { icon: 'fa-solid fa-atom', color: 'var(--sapphire)', label: 'Dioxus' },
   discord: { icon: 'fa-brands fa-discord', color: 'var(--lavender)', label: 'Discord' },
@@ -62,7 +63,7 @@ export const code: Project[] = [
     status: 'active',
     description:
       "Serverless Discord bot on AWS, at Master's service. The event-driven design is proven in production, with plenty more features on the way.",
-    tech: [tech.typescript, tech.aws, tech.discord],
+    tech: [tech.typescript, tech.aws, tech.cdk, tech.discord],
     links: [github('meido')],
   },
   {
@@ -86,7 +87,7 @@ export const code: Project[] = [
     status: 'active',
     description:
       'projen template for AWS CDK apps in TypeScript, so new serverless projects start from a sane baseline.',
-    tech: [tech.typescript, tech.aws],
+    tech: [tech.typescript, tech.aws, tech.cdk],
     links: [github('cdk-ts-serverless-template')],
   },
   {
@@ -109,7 +110,7 @@ export const code: Project[] = [
     status: 'done',
     description:
       'Website and AWS infrastructure for AWS Community Day Czech Republic: a Hugo site deployed with CDK, built from scratch and run through the 2025 edition.',
-    tech: [tech.hugo, tech.typescript, tech.aws],
+    tech: [tech.hugo, tech.typescript, tech.aws, tech.cdk],
     links: [
       {
         icon: 'fa-brands fa-github',
@@ -164,7 +165,7 @@ export const code: Project[] = [
     status: 'archived',
     description:
       'AWS CDK construct that creates an SES identity and verifies it with DKIM records in a Route53 hosted zone. Archived now that CDK does this itself.',
-    tech: [tech.typescript, tech.aws],
+    tech: [tech.typescript, tech.aws, tech.cdk],
     links: [github('cdk-verified-ses-identity')],
   },
 ];
@@ -182,7 +183,7 @@ export const maker: Project[] = [
     status: 'wip',
     description:
       'ESP32 door sensor that reports toilet occupancy through AWS IoT Core and a serverless backend, to Slack first with more channels planned. Hardware prototype done; firmware moving to Rust, backend next.',
-    tech: [tech.esp32, tech.rust, tech.aws, tech.slack],
+    tech: [tech.esp32, tech.rust, tech.aws, tech.cdk, tech.slack],
   },
   {
     name: 'c3-rust-playground',
