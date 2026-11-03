@@ -5,8 +5,8 @@ export interface Project {
   years?: string;
   description: string;
   tech: { icon: string; color: string; label: string }[];
-  /** title overrides the default "<name> on <label>" tooltip */
-  links?: { icon: string; href: string; label: string; title?: string }[];
+  /** title overrides the default "<name> on <label>" tooltip; color tints the icon */
+  links?: { icon: string; href: string; label: string; title?: string; color?: string }[];
 }
 
 const tech = {
@@ -26,7 +26,6 @@ const tech = {
   sst: { icon: 'si-sst', color: 'var(--peach)', label: 'SST' },
   dioxus: { icon: 'fa-solid fa-atom', color: 'var(--sapphire)', label: 'Dioxus' },
   discord: { icon: 'fa-brands fa-discord', color: 'var(--lavender)', label: 'Discord' },
-  npm: { icon: 'fa-brands fa-npm', color: 'var(--red)', label: 'npm' },
   tui: { icon: 'fa-solid fa-table-cells', color: 'var(--green)', label: 'ratatui' },
   omarchy: { icon: 'fa-solid fa-puzzle-piece', color: 'var(--mauve)', label: 'Omarchy plugin (QML)' },
   spotify: { icon: 'fa-brands fa-spotify', color: 'var(--green)', label: 'Spotify' },
@@ -47,6 +46,13 @@ const github = (repo: string) => ({
   icon: 'fa-brands fa-github',
   href: `https://github.com/malanius/${repo}`,
   label: 'GitHub',
+});
+
+const npm = (pkg: string) => ({
+  icon: 'fa-brands fa-npm',
+  href: `https://www.npmjs.com/package/${pkg}`,
+  label: 'npm',
+  color: 'var(--red)',
 });
 
 export const code: Project[] = [
@@ -155,10 +161,9 @@ export const code: Project[] = [
   {
     name: 'strapi-provider-upload-aws-s3-cdn',
     status: 'done',
-    description:
-      'Strapi upload provider for S3 that works with private buckets behind a CloudFront CDN. Published on npm.',
-    tech: [tech.javascript, tech.aws, tech.npm],
-    links: [github('strapi-provider-upload-aws-s3-cdn')],
+    description: 'Strapi upload provider for S3 that works with private buckets behind a CloudFront CDN.',
+    tech: [tech.javascript, tech.aws],
+    links: [github('strapi-provider-upload-aws-s3-cdn'), npm('@malanius/strapi-provider-upload-aws-s3-cdn')],
   },
   {
     name: 'cdk-verified-ses-identity',
@@ -166,7 +171,7 @@ export const code: Project[] = [
     description:
       'AWS CDK construct that creates an SES identity and verifies it with DKIM records in a Route53 hosted zone. Archived now that CDK does this itself.',
     tech: [tech.typescript, tech.aws, tech.cdk],
-    links: [github('cdk-verified-ses-identity')],
+    links: [github('cdk-verified-ses-identity'), npm('@malanius/cdk-verified-ses-identity')],
   },
 ];
 

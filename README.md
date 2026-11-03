@@ -223,7 +223,7 @@ Order in the file = order on the page.
   years: '2017–2020',             // active years, '2025–' if ongoing (optional)
   description: 'One or two sentences.',
   tech: [tech.rust, tech.linux],  // icons from the `tech` map at the top of the file
-  links: [github('pidjezdy')],    // optional; github() builds the GitHub link
+  links: [github('pidjezdy')],    // optional; github() and npm() build GitHub and npm links
 },
 ```
 
@@ -238,6 +238,7 @@ const tech = {
 
 Non-GitHub links take an icon, URL and label: `{ icon: 'fa-brands fa-mixcloud', href: '…',
 label: 'Mixcloud' }`. The tooltip defaults to "<name> on <label>"; set `title` to override.
+Link icons use the text color; set `color` (e.g. `'var(--red)'`, as `npm()` does) to tint one.
 
 ### Skills (`website/src/data/skills.ts`)
 
